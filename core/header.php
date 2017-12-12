@@ -1,7 +1,10 @@
 <?php
 
+require("connection.php");
 require("functions.php");
 require("configs.php");
+
+$user = "Tim";
 
 ?>
 <!DOCTYPE html>
@@ -20,18 +23,27 @@ require("configs.php");
 	<div class="bg-gradient"></div>
 	<nav>
 		<ul>
-			<li>
-				<a href="films">Films</a>
-				<ul>
-					<li><a href="films#adventure">Adventure</a></li>
-					<li><a href="films#comedy">Comedy</a></li>
-					<li><a href="films#action">Action</a></li>
-					<li><a href="films#drama">Drama</a></li>
-					<li><a href="films#horror">Horror</a></li>
-				</ul>
-			</li>
-			<li><a href="abonnement">Abonnement</a></li>
-			<li><a href="login">Inloggen</a></li>
+			<?php
+			if($user != NULL) {
+				echo '<li>
+						Welkom terug, '.$user.'!
+						<a href="user.php">Bekijk profiel</a>
+					</li>
+					<li>
+						<a href="films.php">Films &darr;</a>
+						<ul>
+							<li><a href="films.php#adventure">Adventure</a></li>
+							<li><a href="films.php#comedy">Comedy</a></li>
+							<li><a href="films.php#action">Action</a></li>
+							<li><a href="films.php#drama">Drama</a></li>
+							<li><a href="films.php#horror">Horror</a></li>
+						</ul>
+					</li>';
+			} else {
+				echo '<li><a href="login">Inloggen</a></li>';
+				echo '<li><a href="abonnement">Abonnement</a></li>';
+			}
+			?>
 			<li><a href="over_ons">Over Ons</a></li>
 		</ul>
 	</nav>

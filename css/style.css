@@ -41,6 +41,19 @@ video {
 	height: 100%;
 }
 
+.error-box {
+	z-index: 10;
+	position: fixed;
+	width: 50%;
+	background-color: white;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: 5px;
+	text-align: center;
+	border-radius: 10px;
+}
+
 /* Navigation Menu */
 nav {
 	position: fixed;
@@ -102,8 +115,15 @@ nav ul li a:hover {
 	-webkit-transition: font-size 0.2s ease-out;
 }
 
-nav ul li ul { display: none; }
-nav ul li:hover ul { display: flow-root; }
+nav ul li ul {
+	max-height: 0;
+	transition: max-height 0.3s ease-out;
+	overflow: hidden;
+}
+nav ul li:hover ul {
+	max-height: 500px;
+	transition: max-height 0.5s ease-in;
+}
 
 nav ul li ul li {
 	width: 100%;
@@ -212,7 +232,7 @@ header form select { font-size: 12px; }
 
 .film {
 	width: 30%;
-	height: 600px;
+	height: 60vh;
 	margin: 0 auto 10px auto;
 	transition: all 0.1s ease-out;
 	-o-transition: all 0.1s ease-out;
@@ -234,7 +254,7 @@ header form select { font-size: 12px; }
 }
 
 .film a img {
-	width: 100%;
+	width: 70%;
 	height: 80%;
 }
 
