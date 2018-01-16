@@ -4,61 +4,78 @@ function getPage($page) {
     return stripos($_SERVER['REQUEST_URI'], $page);
 }
 
-function retrieveGenresInSelect($database) {
-    $query = $database->query("SELECT * FROM Genre WHERE genre_name != 'Sci-Fi'");
+function viewFilmHeader($database, $genre=NULL) {
+    $default = ($genre == NULL)? 'selected' : '';
+    echo '<form method="GET">
+               <input type="text" name="zoekveld" size="30" placeholder="Zoek een film...">
+               <input type="submit" name="zoek" value="Zoek">
+               <select name="filter_genre">
+                   <option '.$default.' disabled hidden>-- Kies een genre --</option>';
 
-    while($genre = $query->fetch()) {
-        echo '<option value="genre_'.$genre['genre_name'].'">'.$genre['genre_name'].'</option>';
+    $query = $database->query("SELECT * FROM Genre WHERE genre_name != 'Sci-Fi'");
+    while($genres = $query->fetch()) {
+        if($genres['genre_name'] == $genre) {
+            echo '<option selected value="'.$genres['genre_name'].'">'.$genres['genre_name'].'</option>';
+        } else {
+            echo '<option value="'.$genres['genre_name'].'">'.$genres['genre_name'].'</option>';
+        }
     }
+    echo		'</select>
+            </form>';
 }
 
-function pagination($destination, $page, $pageLimit) {
+function pagination($destination, $page, $pageLimit, $genre=NULL) {
     $pagination = '<div class="pagination">';
     if($page <= 3) {
 
         for($pageIndex = 1; $pageIndex <= 5; $pageIndex++) {
             $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'">'.$pageIndex.'</a>';
+            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'&genre='.$genre.'">'.$pageIndex.'</a>';
         }
-        $pagination .= '<a href="'.$destination.'?page='.($page + 1).'">&raquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.'">&raquo; Last</a></div>';
+        $pagination .= '<a href="'.$destination.'?page='.($page + 1).'&genre='.$genre.'">&raquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.'&genre='.$genre.'">&raquo; Last</a></div>';
 
     } elseif($page >= $pageLimit - 2) {
 
-        $pagination .= '<a href="'.$destination.'?page=1">First &laquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.($page - 1).'">&laquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page=1&genre='.$genre.'">First &laquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.($page - 1).'&genre='.$genre.'">&laquo;</a>';
         for($pageIndex = $pageLimit - 4; $pageIndex <= $pageLimit; $pageIndex++) {
             $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'">'.$pageIndex.'</a>';
+            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'&genre='.$genre.'">'.$pageIndex.'</a>';
         }
 
     } else {
 
-        $pagination .= '<a href="'.$destination.'?page=1">First &laquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.($page - 1).'">&laquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page=1&genre='.$genre.'">First &laquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.($page - 1).'&genre='.$genre.'">&laquo;</a>';
         for($pageIndex = $page - 2; $pageIndex <= $page + 2; $pageIndex++) {
             $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'">'.$pageIndex.'</a>';
+            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'&genre='.$genre.'">'.$pageIndex.'</a>';
         }
-        $pagination .= '<a href="'.$destination.'?page='.($page + 1).'">&raquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.'">&raquo; Last</a></div>';
+        $pagination .= '<a href="'.$destination.'?page='.($page + 1).'&genre='.$genre.'">&raquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.'&genre='.$genre.'">&raquo; Last</a></div>';
 
     }
     return $pagination;
 }
 
-function retrieveMoviesInBox($database, $page=1, $genre='') {
+function retrieveMoviesInBox($database, $page=1, $genre=NULL) {
     $rowCount = 0;
     $rowLimit = $page * 15;
-    $query = $database->query('SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\') AND movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name='.$genre.')');
+    if($genre !== NULL) {
+        $sqlQuery = 'SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\') AND movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name LIKE \''.$genre.'\')';
+    } else {
+        $sqlQuery = 'SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\')';
+    }
+    $query = $database->query($sqlQuery);
     $pageLimit = (int)(count($query->fetchAll()) / 15);
-    $query = $database->query('SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\') AND movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name='.$genre.')');
+    $query = $database->query($sqlQuery);
     if(count($query->fetchAll()) % 15 > 0) $pageLimit += 1;
     if($page > $pageLimit || $page < 1) {
         header("Location: error");
     }
 
-    $query = $database->query('SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\') AND movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name='.$genre.') ORDER BY title ASC');
+    $query = $database->query($sqlQuery.'ORDER BY title ASC');
     while($movie = $query->fetch()) {
         if(($rowCount > ($page - 1) * 15) && ($rowCount <= $rowLimit)) {
             if($movie['cover_image'] == NULL) {
@@ -76,7 +93,7 @@ function retrieveMoviesInBox($database, $page=1, $genre='') {
         $rowCount++;
     }
 
-    echo pagination('films', $page, $pageLimit);
+    echo pagination('films', $page, $pageLimit, $genre);
 }
 
 ?>

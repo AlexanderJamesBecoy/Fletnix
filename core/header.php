@@ -4,8 +4,8 @@ require_once("connection.php");
 require_once("functions.php");
 require_once("configs.php");
 
-
 $user = "Tim";
+$genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 ?>
 <!DOCTYPE html>
@@ -54,16 +54,8 @@ $user = "Tim";
 			<a class="logo" href="/Fletnix"><img src="images/logo.png" alt="logo"></a>
 			<?php
 				if (getPage('films')){
-				     echo '<form method="GET">
-								<input type="text" name="zoekveld" size="30" placeholder="Zoek een film...">
-								<input type="submit" name="zoek" value="Zoek">
-								<select name="filter_genre">
-									<option selected disabled hidden>-- Kies een genre --</option>
-									<option value="genre_default">Alles</option>';
-									retrieveGenresInSelect($dbh);
-					echo		'</select>
-							</form>';
+					viewFilmHeader($dbh, $genre);
 				}
-			echo "<h1>$greeting</h1>";
+				echo "<h1>$greeting</h1>";
 			?>
 		</header>

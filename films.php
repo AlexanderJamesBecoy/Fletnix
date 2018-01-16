@@ -5,7 +5,7 @@
 
 ?>
 		<div class="box-films">
-			<?php retrieveMoviesInBox($dbh, $page); ?>
+			<?php retrieveMoviesInBox($dbh, $page, $genre); ?>
 		</div>
 
 		<!--

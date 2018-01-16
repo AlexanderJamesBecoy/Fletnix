@@ -241,13 +241,18 @@ header form select { font-size: 12px; }
 
 .box-films .pagination {
 	width: 100%;
+	position: fixed;
+	z-index: 10;
+	bottom: 2.5%;
+	left: 0;
+	right: 0;
 	display: inline-flex;
 	justify-content: center;
 }
 
 .box-films .pagination a {
 	padding: 20px;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.6);
 	text-decoration: none;
 	text-size: 16px;
 	color: #666666;
