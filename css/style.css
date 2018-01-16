@@ -247,9 +247,19 @@ header form select { font-size: 12px; }
 
 .box-films .pagination a {
 	padding: 20px;
-	background-color: #FFFFFF;
+	background-color: rgba(0, 0, 0, 0.5);
 	text-decoration: none;
+	text-size: 16px;
+	color: #666666;
+	margin-right: 1px;
 }
+
+.box-films .pagination a:hover {
+	color: #4286F4;
+	transition: color 0.2s ease;
+}
+
+.box-films .pagination a.active { color: #4286F4; }
 
 .film {
 	width: 30%;
