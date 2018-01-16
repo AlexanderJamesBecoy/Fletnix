@@ -1,6 +1,9 @@
 <?php
 	$siteIndex = 0;
-	include("core/header.php")
+	include("core/header.php");
+	if(isset($user)) {
+		header("Location: films");
+	}
 ?>
 
 <div class="box">
@@ -14,4 +17,4 @@
 	</div>
 </div>
 
-<?php include("core/footer.php") ?>
+<?php include("core/footer.php"); ?>

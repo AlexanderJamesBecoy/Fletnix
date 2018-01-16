@@ -1,8 +1,9 @@
 <?php
 
-require("connection.php");
-require("functions.php");
-require("configs.php");
+require_once("connection.php");
+require_once("functions.php");
+require_once("configs.php");
+
 
 $user = "Tim";
 
@@ -27,16 +28,17 @@ $user = "Tim";
 			if($user != NULL) {
 				echo '<li>
 						Welkom terug, '.$user.'!
-						<a href="user.php">Bekijk profiel</a>
+						<a class="user-a" href="user">Bekijk profiel</a>
+						<a class="user-a" href="logout.php">Uitloggen</a>
 					</li>
 					<li>
-						<a href="films.php">Films &darr;</a>
+						<a href="films">Film</a>
 						<ul>
-							<li><a href="films.php#adventure">Adventure</a></li>
-							<li><a href="films.php#comedy">Comedy</a></li>
-							<li><a href="films.php#action">Action</a></li>
-							<li><a href="films.php#drama">Drama</a></li>
-							<li><a href="films.php#horror">Horror</a></li>
+							<li><a href="films#adventure">Adventure</a></li>
+							<li><a href="films#comedy">Comedy</a></li>
+							<li><a href="films#action">Action</a></li>
+							<li><a href="films#drama">Drama</a></li>
+							<li><a href="films#horror">Horror</a></li>
 						</ul>
 					</li>';
 			} else {

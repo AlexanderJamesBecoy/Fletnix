@@ -1,7 +1,7 @@
 <?php
 
 $hostname = "(local)";
-$dbname = "Fletnix";
+$dbname = "gsdf";
 $username = "sa";
 $pw = "";
 
@@ -10,8 +10,8 @@ try {
                     ConnectionPooling=0, $username, $pw");
 } catch (PDOException $e) {
     echo '<div class="error-box"';
-        echo "<p>Houston, we have a problem... The database won't connect.<br>";
-        echo "{$e->getMessage()}</p>";
+        echo "<dt>Houston, we have a problem... The database won't connect.</dt>";
+        echo "<dd>{$e->getMessage()}</dd>";
     echo "</div>";
 }
 

@@ -44,6 +44,8 @@ video {
 .error-box {
 	z-index: 10;
 	position: fixed;
+	padding: 10px 30px;
+	font-size: 12px;
 	width: 50%;
 	background-color: white;
 	margin: 0 auto;
@@ -53,6 +55,8 @@ video {
 	text-align: center;
 	border-radius: 10px;
 }
+
+.error-box dd { color: #870E1C; }
 
 /* Navigation Menu */
 nav {
@@ -132,6 +136,10 @@ nav ul li ul li {
 }
 nav ul li ul li a { font-size: 0.75rem; }
 nav ul li ul li a:hover { font-size: 1.0rem; }
+
+nav ul li a.user-a {
+	font-size: 0.8rem;
+}
 
 /* Container */
 .container {
