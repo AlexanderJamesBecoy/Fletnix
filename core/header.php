@@ -29,7 +29,7 @@ $user = "Tim";
 				echo '<li>
 						Welkom terug, '.$user.'!
 						<a class="user-a" href="user">Bekijk profiel</a>
-						<a class="user-a" href="logout.php">Uitloggen</a>
+						<a class="user-a" href="logout">Uitloggen</a>
 					</li>
 					<li>
 						<a href="films">Film</a>
@@ -59,13 +59,9 @@ $user = "Tim";
 								<input type="submit" name="zoek" value="Zoek">
 								<select name="filter_genre">
 									<option selected disabled hidden>-- Kies een genre --</option>
-									<option value="genre_default">Alles</option>
-									<option value="genre_adventure">Adventure</option>
-									<option value="genre_adventure">Action</option>
-									<option value="genre_adventure">Comedy</option>
-									<option value="genre_adventure">Drama</option>
-									<option value="genre_adventure">Horror</option>
-								</select>
+									<option value="genre_default">Alles</option>';
+									retrieveGenresInSelect($dbh);
+					echo		'</select>
 							</form>';
 				}
 			echo "<h1>$greeting</h1>";

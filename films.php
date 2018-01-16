@@ -1,5 +1,14 @@
-<?php include('core/header.php'); ?>
+<?php
 
+	include('core/header.php');
+	$page = isset($_GET['page'])? $_GET['page'] : 1;
+
+?>
+		<div class="box-films">
+			<?php retrieveMoviesInBox($dbh, $page); ?>
+		</div>
+
+		<!--
 		<div id="adventure" class="box-films">
 			<h1>Adventure</h1>
 			<div class="film">
@@ -175,6 +184,7 @@
 					<h3>1982</h3>
 				</a>
 			</div>
+			-->
 		</div>
 
 <?php include('core/footer.php'); ?>

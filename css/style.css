@@ -41,7 +41,7 @@ video {
 	height: 100%;
 }
 
-.error-box {
+.notification-box {
 	z-index: 10;
 	position: fixed;
 	padding: 10px 30px;
@@ -54,6 +54,7 @@ video {
 	top: 5px;
 	text-align: center;
 	border-radius: 10px;
+	box-shadow: 1px 0 3px #000000;
 }
 
 .error-box dd { color: #870E1C; }
@@ -236,6 +237,18 @@ header form select { font-size: 12px; }
 	border-bottom: 5px solid #4286F4;
 	margin-bottom: 10px;
 	text-shadow: 2px 2px #000000;
+}
+
+.box-films .pagination {
+	width: 100%;
+	display: inline-flex;
+	justify-content: center;
+}
+
+.box-films .pagination a {
+	padding: 20px;
+	background-color: #FFFFFF;
+	text-decoration: none;
 }
 
 .film {
