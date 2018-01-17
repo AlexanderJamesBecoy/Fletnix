@@ -5,7 +5,7 @@
 
 ?>
 		<div class="box-films">
-			<?php retrieveMoviesInBox($dbh, $page, $genre); ?>
+			<?php drawFilms($dbh, $page, $genre, $search); ?>
 		</div>
 
 <?php include('core/footer.php'); ?>

@@ -6,6 +6,7 @@ require_once("configs.php");
 
 $user = "Tim";
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
+$search = isset($_GET['filter_search'])? $_GET['filter_search'] : NULL;
 
 ?>
 

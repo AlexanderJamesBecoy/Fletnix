@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			<div class="box-1-2">
-				<?php getDetailFromMovie($dbh, $movie) ?>
+				<?php getDetailFromMovie($dbh, $movie); ?>
 			</div>
 		</div>
 

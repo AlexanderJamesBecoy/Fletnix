@@ -9,7 +9,7 @@ function getGenres($db) {
     $sth = $db->query("SELECT DISTINCT genre_name FROM Genre");
     while($genres = $sth->fetch()) {
         $genre = $genres['genre_name'];
-        $list .= '<li><a href="films?genre='.$genre.'">'.$genre.'</a></li>';
+        $list .= '<li><a href="films?filter_genre='.$genre.'">'.$genre.'</a></li>';
     }
     $list .= '</ul>';
     return $list;
@@ -18,21 +18,59 @@ function getGenres($db) {
 function viewFilmHeader($database, $genre=NULL) {
     $default = ($genre == NULL)? 'selected' : '';
     echo '<form method="GET">
-               <input type="text" name="zoekveld" size="30" placeholder="Zoek een film...">
-               <input type="submit" name="zoek" value="Zoek">
+               <input type="text" name="filter_search" size="30" placeholder="Zoek een film...">
+               <input type="submit" value="Zoek">
                <select name="filter_genre">
                    <option '.$default.' disabled hidden>-- Kies een genre --</option>';
-
-    $query = $database->query("SELECT * FROM Genre WHERE genre_name != 'Sci-Fi'");
-    while($genres = $query->fetch()) {
-        if($genres['genre_name'] == $genre) {
-            echo '<option selected value="'.$genres['genre_name'].'">'.$genres['genre_name'].'</option>';
-        } else {
-            echo '<option value="'.$genres['genre_name'].'">'.$genres['genre_name'].'</option>';
-        }
-    }
+                    $query = $database->query("SELECT * FROM Genre WHERE genre_name != 'Sci-Fi'");
+                    while($genres = $query->fetch()) {
+                        if($genres['genre_name'] == $genre) {
+                            echo '<option selected value="'.$genres['genre_name'].'">'.$genres['genre_name'].'</option>';
+                        } else {
+                            echo '<option value="'.$genres['genre_name'].'">'.$genres['genre_name'].'</option>';
+                        }
+                    }
     echo		'</select>
             </form>';
+}
+
+function pagination($destination, $page, $pageLimit, $genre=NULL, $search=NULL) {
+    $pagination = '<div class="pagination">';
+    $genre = '&filter_genre='.$genre;
+    $search = '&filter_search='.$search;
+    $filter = $genre . $search;
+
+    if($page <= 3) {
+
+        for($pageIndex = 1; $pageIndex <= 5; $pageIndex++) {
+            $active = ($pageIndex == $page)? 'active' : '';
+            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+        }
+        $pagination .= '<a href="'.$destination.'?page='.($page + 1).$filter.'">&raquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.$filter.'">&raquo; Last</a></div>';
+
+    } elseif($page >= $pageLimit - 2) {
+
+        $pagination .= '<a href="'.$destination.'?page=1'.$filter.'">First &laquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.($page - 1).$filter.'">&laquo;</a>';
+        for($pageIndex = $pageLimit - 4; $pageIndex <= $pageLimit; $pageIndex++) {
+            $active = ($pageIndex == $page)? 'active' : '';
+            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+        }
+
+    } else {
+
+        $pagination .= '<a href="'.$destination.'?page=1'.$filter.'">First &laquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.($page - 1).$filter.'">&laquo;</a>';
+        for($pageIndex = $page - 2; $pageIndex <= $page + 2; $pageIndex++) {
+            $active = ($pageIndex == $page)? 'active' : '';
+            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+        }
+        $pagination .= '<a href="'.$destination.'?page='.($page + 1).$filter.'">&raquo;</a>';
+        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.$filter.'">&raquo; Last</a></div>';
+
+    }
+    return $pagination;
 }
 
 function getFilmPoster($cover) {
@@ -43,59 +81,35 @@ function getFilmPoster($cover) {
     }
 }
 
-function pagination($destination, $page, $pageLimit, $genre=NULL, $zoekveld=NULL) {
-    $pagination = '<div class="pagination">';
-    if($page <= 3) {
-
-        for($pageIndex = 1; $pageIndex <= 5; $pageIndex++) {
-            $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'&genre='.$genre.'">'.$pageIndex.'</a>';
-        }
-        $pagination .= '<a href="'.$destination.'?page='.($page + 1).'&genre='.$genre.'">&raquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.'&genre='.$genre.'">&raquo; Last</a></div>';
-
-    } elseif($page >= $pageLimit - 2) {
-
-        $pagination .= '<a href="'.$destination.'?page=1&genre='.$genre.'">First &laquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.($page - 1).'&genre='.$genre.'">&laquo;</a>';
-        for($pageIndex = $pageLimit - 4; $pageIndex <= $pageLimit; $pageIndex++) {
-            $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'&genre='.$genre.'">'.$pageIndex.'</a>';
-        }
-
-    } else {
-
-        $pagination .= '<a href="'.$destination.'?page=1&genre='.$genre.'">First &laquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.($page - 1).'&genre='.$genre.'">&laquo;</a>';
-        for($pageIndex = $page - 2; $pageIndex <= $page + 2; $pageIndex++) {
-            $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.'&genre='.$genre.'">'.$pageIndex.'</a>';
-        }
-        $pagination .= '<a href="'.$destination.'?page='.($page + 1).'&genre='.$genre.'">&raquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.'&genre='.$genre.'">&raquo; Last</a></div>';
-
-    }
-    return $pagination;
-}
-
-function retrieveMoviesInBox($database, $page=1, $genre=NULL) {
+function drawFilms($database, $page=1, $genre=NULL, $search=NULL) {
+    if(!empty($genre)) echo '<h1>'.$genre.'</h1>';
+    $filters = array();
+    $movies = array();
     $rowCount = 0;
     $rowLimit = $page * 15;
-    if($genre !== NULL) {
-        $sqlQuery = 'SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\') AND movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name LIKE \''.$genre.'\')';
-    } else {
-        $sqlQuery = 'SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = \'Sci-Fi\')';
+    $sqlQuery = "SELECT * FROM Movie WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = 'Sci-Fi')";
+    if(!empty($genre)) {
+        $sqlQuery .= ' AND movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name LIKE ?)';
+        $filters[] = $genre;
     }
-    $query = $database->query($sqlQuery);
-    $pageLimit = (int)(count($query->fetchAll()) / 15);
-    $query = $database->query($sqlQuery);
-    if(count($query->fetchAll()) % 15 > 0) $pageLimit += 1;
+    if(!empty($search)) {
+        $sqlQuery .= ' AND title LIKE ?';
+        $filters[] = '%'.$search.'%';
+    }
+    $sqlQuery .= ' ORDER BY title ASC';
+    $sth = $database->prepare($sqlQuery);
+    $sth->execute($filters);
+    $movies = $sth->fetchAll();
+    $pageLimit = (int)(count($movies) / 15);
+    if(($pageLimit % 15 > 0) || $pageLimit === 0) {
+        $pageLimit += 1;
+    }
+
     if($page > $pageLimit || $page < 1) {
         header("Location: error");
     }
 
-    $query = $database->query($sqlQuery.'ORDER BY title ASC');
-    while($movie = $query->fetch()) {
+    foreach($movies as $movie) {
         $poster = $movie['cover_image'];
         if(($rowCount > ($page - 1) * 15) && ($rowCount <= $rowLimit)) {
             echo    '<div class="film">
@@ -109,7 +123,7 @@ function retrieveMoviesInBox($database, $page=1, $genre=NULL) {
         $rowCount++;
     }
 
-    echo pagination('films', $page, $pageLimit, $genre);
+    echo pagination('films', $page, $pageLimit, $genre, $search);
 }
 
 /* View Movie */
