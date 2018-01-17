@@ -39,36 +39,36 @@ function pagination($destination, $page, $pageLimit, $genre=NULL, $search=NULL) 
     $genre = '&filter_genre='.$genre;
     $search = '&filter_search='.$search;
     $filter = $genre . $search;
-
-    if($page <= 3) {
-
-        for($pageIndex = 1; $pageIndex <= 5; $pageIndex++) {
-            $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+    if($pageLimit > 5) {
+        if($page <= 3) {
+            for($pageIndex = 1; $pageIndex <= 5; $pageIndex++) {
+                $active = ($pageIndex == $page)? 'active' : '';
+                $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+            }
+            $pagination .= '<a href="'.$destination.'?page='.($page + 1).$filter.'">&raquo;</a>';
+            $pagination .= '<a href="'.$destination.'?page='.$pageLimit.$filter.'">&raquo; Last</a></div>';
+        } elseif($page >= $pageLimit - 2) {
+            $pagination .= '<a href="'.$destination.'?page=1'.$filter.'">First &laquo;</a>';
+            $pagination .= '<a href="'.$destination.'?page='.($page - 1).$filter.'">&laquo;</a>';
+            for($pageIndex = $pageLimit - 4; $pageIndex <= $pageLimit; $pageIndex++) {
+                $active = ($pageIndex == $page)? 'active' : '';
+                $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+            }
+        } else {
+            $pagination .= '<a href="'.$destination.'?page=1'.$filter.'">First &laquo;</a>';
+            $pagination .= '<a href="'.$destination.'?page='.($page - 1).$filter.'">&laquo;</a>';
+            for($pageIndex = $page - 2; $pageIndex <= $page + 2; $pageIndex++) {
+                $active = ($pageIndex == $page)? 'active' : '';
+                $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
+            }
+            $pagination .= '<a href="'.$destination.'?page='.($page + 1).$filter.'">&raquo;</a>';
+            $pagination .= '<a href="'.$destination.'?page='.$pageLimit.$filter.'">&raquo; Last</a></div>';
         }
-        $pagination .= '<a href="'.$destination.'?page='.($page + 1).$filter.'">&raquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.$filter.'">&raquo; Last</a></div>';
-
-    } elseif($page >= $pageLimit - 2) {
-
-        $pagination .= '<a href="'.$destination.'?page=1'.$filter.'">First &laquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.($page - 1).$filter.'">&laquo;</a>';
-        for($pageIndex = $pageLimit - 4; $pageIndex <= $pageLimit; $pageIndex++) {
-            $active = ($pageIndex == $page)? 'active' : '';
-            $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
-        }
-
     } else {
-
-        $pagination .= '<a href="'.$destination.'?page=1'.$filter.'">First &laquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.($page - 1).$filter.'">&laquo;</a>';
-        for($pageIndex = $page - 2; $pageIndex <= $page + 2; $pageIndex++) {
+        for($pageIndex = 1; $pageIndex <= $pageLimit; $pageIndex++) {
             $active = ($pageIndex == $page)? 'active' : '';
             $pagination .= '<a class="'.$active.'" href="'.$destination.'?page='.$pageIndex.$filter.'">'.$pageIndex.'</a>';
         }
-        $pagination .= '<a href="'.$destination.'?page='.($page + 1).$filter.'">&raquo;</a>';
-        $pagination .= '<a href="'.$destination.'?page='.$pageLimit.$filter.'">&raquo; Last</a></div>';
-
     }
     return $pagination;
 }
@@ -100,10 +100,7 @@ function drawFilms($database, $page=1, $genre=NULL, $search=NULL) {
     $sth = $database->prepare($sqlQuery);
     $sth->execute($filters);
     $movies = $sth->fetchAll();
-    $pageLimit = (int)(count($movies) / 15);
-    if(($pageLimit % 15 > 0) || $pageLimit === 0) {
-        $pageLimit += 1;
-    }
+    $pageLimit = ceil(count($movies) / 15);
 
     if($page > $pageLimit || $page < 1) {
         header("Location: error");
@@ -111,7 +108,7 @@ function drawFilms($database, $page=1, $genre=NULL, $search=NULL) {
 
     foreach($movies as $movie) {
         $poster = $movie['cover_image'];
-        if(($rowCount > ($page - 1) * 15) && ($rowCount <= $rowLimit)) {
+        if(($rowCount >= ($page - 1) * 15) && ($rowCount < $rowLimit)) {
             echo    '<div class="film">
                         <a href="view_movie?id='.$movie['movie_id'].'">
                             <img src="'.getFilmPoster($poster).'" alt="cover">
