@@ -8,6 +8,7 @@ $user = "Tim";
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 ?>
+
 <!DOCTYPE html>
 <html lang="NL">
 <head>
@@ -32,14 +33,7 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 						<a class="user-a" href="logout">Uitloggen</a>
 					</li>
 					<li>
-						<a href="films">Film</a>
-						<ul>
-							<li><a href="films#adventure">Adventure</a></li>
-							<li><a href="films#comedy">Comedy</a></li>
-							<li><a href="films#action">Action</a></li>
-							<li><a href="films#drama">Drama</a></li>
-							<li><a href="films#horror">Horror</a></li>
-						</ul>
+						<a href="films">Film</a>'.getGenres($dbh).'
 					</li>';
 			} else {
 				echo '<li><a href="login">Inloggen</a></li>';
@@ -53,9 +47,7 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 		<header>
 			<a class="logo" href="/Fletnix"><img src="images/logo.png" alt="logo"></a>
 			<?php
-				if (getPage('films')){
-					viewFilmHeader($dbh, $genre);
-				}
+				if (getPage('films') || getPage('view_movie')){ viewFilmHeader($dbh, $genre); }
 				echo "<h1>$greeting</h1>";
 			?>
 		</header>

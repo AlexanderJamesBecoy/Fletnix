@@ -407,24 +407,31 @@ form .form-control input[type=submit]:hover {
     text-align: center;
 }
 
-#table-trailer {
+#movie-poster {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#movie-poster img {
+	width: 80%;
+	height: 100%;
+}
+
+#movie-detail {
 	width: 90%;
 	margin: 0 auto;
 }
 
-#table-trailer th {
+#movie-detail th {
 	font-size: 14px;
 	height: 32px;
-	padding-right: 10px;
+	padding: 10px 10px 0 0;
 	border-right: 5px solid #4286F4;
+	vertical-align: top;
 }
 
-#table-trailer td p {
-	width: 90%;
-	margin: 10px 0;
-}
-
-#table-trailer td {
+#movie-detail td {
 	font-size: 12px;
 	padding-left: 10px;
 	background-color: #DDDDDD;
