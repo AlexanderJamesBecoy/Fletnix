@@ -18,13 +18,13 @@
 				    <td>Enterprise</td>
 				    <td>€07.50</td>
 					<td>20</td>
-					<td>10.0%</td>
+					<td>20.0%</td>
 				</tr>
 			  	<tr>
 			  		<td>Mothership</td>
 			    	<td>€10.00</td>
 					<td>&infin;</td>
-					<td>25.0%</td>
+					<td>40.0%</td>
 				</tr>
 			</table>
 			<div class="box" id="registreer">

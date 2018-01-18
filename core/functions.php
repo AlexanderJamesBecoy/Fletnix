@@ -1,5 +1,6 @@
 <?php
 
+/* Compare email and password */
 function compareLogin($database, $email, $password) {
 	$query = $database->prepare("SELECT TOP 1 * FROM Customer WHERE customer_mail_address=? AND password=?");
 	$query->execute(array($email, $password));
@@ -14,16 +15,7 @@ function compareLogin($database, $email, $password) {
 	}
 }
 
-/*
-function getUserInfo($row) {
-	$userInfo = array();
-	foreach($row[0] as $column) {
-		$userInfo[] = $column;
-	}
-    return $userInfo;
-}
-*/
-
+/* Translate numeric date to text */
 function translateDate($date, $day, $month) {
     $newDay = "";
     switch($date){
@@ -259,9 +251,13 @@ function drawFilms($database, $page=1, $genre=NULL, $search=NULL, $director=NULL
 }
 
 /* View Movie */
-function getDetailFromMovie($db, $movie) {
+function getDetailFromMovie($db, $movie, $userInfo) {
     $movie_id = $movie['movie_id'];
-    echo '<table id="movie-detail">';
+    echo '<table class="table-detail">
+				<tr>
+					<th>Prijs</th>
+					<td>'.calculateDiscount($db, $movie['price'], $userInfo['contract_type']).'</td>
+				</tr>';
     if($movie['URL'] != NULL) {
         echo 	'<tr>
                     <th>Prequel</th>
@@ -284,16 +280,13 @@ function getDetailFromMovie($db, $movie) {
             $previous_part = $movie['previous_part'];
             echo 	'<tr>
                         <th>Prequel</th>';
-            $sth = $dbh->prepare("SELECT * FROM Movie WHERE movie_id = ?");
-            $sth->execute(array($previous_part));
-            $previous_movie = $sth->fetch();
-            echo 		'<td><a href="view_movie?id='.$previous_movie['movie_id'].'">'.$previous_movie['title'].'</a></td>';
+			            $sth = $dbh->prepare("SELECT * FROM Movie WHERE movie_id = ?");
+			            $sth->execute(array($previous_part));
+			            $previous_movie = $sth->fetch();
+            			echo 		'<td><a href="view_movie?id='.$previous_movie['movie_id'].'">'.$previous_movie['title'].'</a></td>';
             echo	'</tr>';
         }
-        echo '<tr>
-                <th>Prijs</th>
-                <td>'.$movie['price'].'</td>
-            </tr>'.getCastFromMovie($db, $movie_id, 'Cast').'</table>';
+        echo getCastFromMovie($db, $movie_id, 'Cast').'</table>';
 }
 
 function getGenresFromMovie($db, $movie_id) {
@@ -335,9 +328,82 @@ function getCastFromMovie($db, $movie_id, $th) {
     return $thCast.$tdCast;
 }
 
-function calculateDiscount($price, $discount) {
-    $percentage = 1 - ($discount * 0.01);
-    return $price * $percentage;
+/* Calculate discount */
+function calculateDiscount($db, $price, $contract) {
+	$query = $db->prepare("SELECT discount_percentage FROM Contract WHERE contract_type = ?");
+	$query->execute(array($contract));
+	$row = $query->fetchAll();
+	$discount = $row[0]['discount_percentage'];
+	if($discount > 0) {
+		$percentage = 1.0 - ($discount * 0.01);
+    	return '<span class="blue">Voor maar &euro;'.number_format($price * $percentage, 2, ',', '.').'!</span> Origineel &#8212; &euro;'.number_format($price, 2, ',', '.').'<br/>
+		Vanwege je contract, heb je '.$discount.'%';
+	} else {
+		return '&euro;'.number_format($price, 2, ',', '.');
+	}
+}
+
+/* Get gender */
+function getGender($char) {
+	if($char === 'F') {
+		return '<span class="fem user-text">Vrouwelijk</span>';
+	} else {
+		return '<span class="men user-text">Mannelijk</span>';
+	}
+}
+
+/* Contract Type Aesthetic */
+function getContract($contract_type) {
+	$contract = "";
+	switch($contract_type) {
+		case 'Pro':
+			$contract = '<span class="user-text" style="color: #FFF67F;">Mothership</span>';
+			break;
+		case 'Premium':
+			$contract = '<span class="user-text" style="color: #89521E;">Enterprise</span>';
+			break;
+		default:
+			$contract = '<span class="user-text" style="color: #DDDDDD;">Millenium Falcon</span>';
+	}
+	return $contract;
+}
+
+/* Get invoiced */
+function collectInvoiced($db, $email_address, $invoiced=true) {
+	$query = $db->prepare("SELECT SUM(M.price) as 'price' FROM Movie M INNER JOIN Watchhistory W ON M.movie_id = W.movie_id WHERE customer_mail_address = ? AND invoiced = ?");
+	$paid = ($invoiced)? 1 : 0;
+	$query->execute(array($email_address, $paid));
+	$row = $query->fetchAll();
+	if(count($row) > 0) {
+		return '&euro;'.$row[0]['price'];
+	} else {
+		return 'Je hebt nog niets gehuurd.';
+	}
+}
+
+/* Get most viewed movies */
+function mostViewedMovies($db, $userInfo) {
+	$query = $db->prepare("SELECT TOP 10 M.movie_id, title, duration, publication_year, COUNT(*) as 'viewed'
+				FROM Movie M INNER JOIN Watchhistory W
+					ON M.movie_id = W.movie_id
+				WHERE customer_mail_address = ?
+				GROUP BY M.movie_id, title, duration, publication_year
+				ORDER BY COUNT(*) DESC");
+	$query->execute(array($userInfo['customer_mail_address']));
+	$movies = $query->fetchAll();
+	if(count($movies) > 0) {
+		foreach($movies as $movie) {
+			echo '<tr>
+					<td>'.$movie['title'].'</td>
+					<td class="center">'.$movie['publication_year'].'</td>
+					<td class="center">'.$movie['viewed'].'</td>
+				</tr>';
+		}
+	} else {
+		echo '<tr>
+				<td colspan="3">Je hebt nog geen films gekeken!</td>
+			</tr>';
+	}
 }
 
 ?>

@@ -57,7 +57,15 @@ video {
 	box-shadow: 1px 0 3px #000000;
 }
 
+.center { text-align: center; }
+.user-text { text-shadow: 0 0 1px #000000; }
+.fem { color: #FF7F7F; }
+.men { color: #0000FF; }
 .error-box dd { color: #870E1C; }
+.blue {
+	color: #4286F4;
+	font-size: 1.05em;
+}
 
 /* Navigation Menu */
 nav {
@@ -314,7 +322,7 @@ header form select {
 }
 
 .box-1-2 img {
-	width: 100%;
+	width: 90%;
 	align-content: left;
 	vertical-align: middle;
 	padding: 10px;
@@ -424,12 +432,12 @@ form .form-control input[type=submit]:hover {
 	height: 85%;
 }
 
-#movie-detail {
+.table-detail {
 	width: 90%;
 	margin: 0 auto;
 }
 
-#movie-detail th {
+.table-detail th {
 	font-size: 14px;
 	height: 32px;
 	padding: 10px 10px 0 0;
@@ -437,20 +445,40 @@ form .form-control input[type=submit]:hover {
 	vertical-align: top;
 }
 
-#movie-detail td {
+.table-detail td {
 	font-size: 12px;
 	padding-left: 10px;
 	background-color: #DDDDDD;
 }
 
-#movie-detail a {
+.table-detail a {
 	text-decoration: none;
 	transition: all 0.2s ease;
 }
 
-#movie-detail a:hover {
+.table-detail a:hover {
 	letter-spacing: 2px;
 	transition: all 0.2s ease;
+}
+
+/* User-Movie Detail */
+.user-movie-detail {
+	width: 100%;
+}
+
+.user-movie-detail th {
+	padding: 10px 0;
+	border-bottom: 5px solid #4286F4;
+}
+
+.user-movie-detail th.title {
+	width: 50%;
+}
+
+.user-movie-detail td {
+	font-size: 10px;
+	padding: 2px 5px;
+	background-color: #DDDDDD;
 }
 
 /* Login */
@@ -623,5 +651,4 @@ span.psw {
        display: block;
        float: none;
     }
-
 }

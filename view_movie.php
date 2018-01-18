@@ -15,12 +15,6 @@
 		<div class="box">
 			<div class="box">
 				<h1><?php echo $movie['title']; ?></h1>
-				<!--
-				<video controls autoplay>
-					<source src="videos/trailer.mp4" type="video/mp4">
-					Your browser does not support the video tag.
-				</video>
-				-->
 			</div>
 			<div class="box-1-2">
 				<div id="movie-poster">
@@ -28,7 +22,7 @@
 				</div>
 			</div>
 			<div class="box-1-2">
-				<?php getDetailFromMovie($dbh, $movie); ?>
+				<?php getDetailFromMovie($dbh, $movie, $_SESSION['user']); ?>
 			</div>
 		</div>
 
