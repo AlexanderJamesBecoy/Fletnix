@@ -46,7 +46,14 @@
 				<td><?php echo collectInvoiced($dbh, $user['customer_mail_address'], false); ?></td>
 			</tr>
 		</table>
-		<hr>
+		<div class="user-change">
+			<div class="update" action="user?update" method="POST">
+				<button type="button" onclick="">Switch Contract</button>
+			</div>
+			<form class="delete" action="user?delete" method="POST">
+				<input type="submit" name="delete" value="Delete Account">
+			</form>
+		</div>
 		<table class="user-movie-detail">
 			<h2>Meest bekeken films</h2>
 				<tr>

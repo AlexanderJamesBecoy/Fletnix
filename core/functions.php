@@ -10,7 +10,7 @@ function compareLogin($database, $email, $password) {
 	} else {
 		echo '<div class="notification-box">
 				<dt>Access denied</dt>
-				<dd>Incorrect combination</dd>
+				<dd>Onjuist combinatie</dd>
 			</div>';
 	}
 }
@@ -363,7 +363,7 @@ function getContract($contract_type) {
 			$contract = '<span class="user-text" style="color: #89521E;">Enterprise</span>';
 			break;
 		default:
-			$contract = '<span class="user-text" style="color: #DDDDDD;">Millenium Falcon</span>';
+			$contract = '<span class="user-text" style="color: #FFFFFF;">Millenium Falcon</span>';
 	}
 	return $contract;
 }
@@ -404,6 +404,25 @@ function mostViewedMovies($db, $userInfo) {
 				<td colspan="3">Je hebt nog geen films gekeken!</td>
 			</tr>';
 	}
+}
+
+/* Change contract */
+function updateCustomerContract($db, $email_address, $contract) {
+	$query = $db->prepare("UPDATE Customer SET contract_type = ? WHERE customer_email_address = ?");
+	$query->execute(array($contract, $email_address));
+	header("Location: user");
+}
+
+/* Delete account */
+function deleteCustomer($db, $email_address, $firstname) {
+	session_unset();
+	session_destroy();
+	$query = $db->prepare("DELETE FROM Customer WHERE customer_email_address = ?");
+	$query->execute(array($email_address));
+	echo '<div class="notification-box">
+			<dt>Gebruiker succesvol verwijderd</dt>
+			<dd>Goodbye '.$firstname.' :(</dd>
+		</div>';
 }
 
 ?>
