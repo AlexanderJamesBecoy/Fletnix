@@ -1,10 +1,17 @@
 <?php
 
 require_once("connection.php");
+
+session_start();
 require_once("functions.php");
 require_once("configs.php");
 
-$user = "tim";
+if(isset($_POST["email"])) {
+	$_session['user'] = $_POST["email"];
+	$user = $_session['user'];
+}
+elseif(isset($_session['user'])) $user = $_session['user'];
+
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 ?>
@@ -26,9 +33,9 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 	<nav>
 		<ul>
 
-<button onclick="document.getElementById('id01').style.display='block'">Login</button>
+			
 			<?php
-			if($user != NULL) {
+			if(isset ($user)) {
 				echo '<li>
 						Welkom terug, '.$user.'!
 						<a class="user-a" href="user">Bekijk profiel</a>
@@ -39,9 +46,11 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 					</li>
 					';
 			} else {
-				echo '<li><a href="login">Inloggen</a></li>';
+				echo '<button onclick="document.getElementById(\'id01\').style.display=\'block\'" >Login</button>';
 				echo '<li><a href="abonnement">Abonnement</a></li>';
 			}
+			
+				
 
 			?>
 			<li><a href="over_ons">Over Ons</a></li>
@@ -50,22 +59,23 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 <div id="id01" class="modal">
 
-  <form class="modal-content animate" action="#">
+  <form class="modal-content animate" action="/Fletnix" method="POST">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-      <label><b>Username</b></label>
-      <input type="text" placeholder="Email-adres" name="email" required>
+      <label><b>email</b></label>
+      <input type="text" placeholder="email adres" name="email" required autofocus>
 
       <label><b>Password</b></label>
-      <input type="password" placeholder="Wachtwoord" name="psw" required>
-
-      <button type="submit">Login</button>
+      <input type="password" placeholder="wachtwoord" name="psw" required>
+      <input type="submit" value="Inloggen">
     </div>
-
+	<? php
+	//header("Refresh:0");
+	?>
 
   </form>
 </div>
@@ -75,7 +85,7 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 		<header>
 			<a class="logo" href="/Fletnix"><img src="images/logo.png" alt="logo"></a>
 			<?php
-				if (getPage('films') || getPage('view_movie')){ viewFilmHeader($dbh, $genre); }
+				if (isset($user)&&(getPage('films') || getPage('view_movie'))){ viewFilmHeader($dbh, $genre); }
 				echo "<h1>$greeting</h1>";
 			?>
 
