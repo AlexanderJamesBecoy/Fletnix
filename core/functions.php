@@ -5,7 +5,7 @@ function compareLogin($database, $email, $password) {
 	$query->execute(array($email, $password));
 	$user = $query->fetchAll();
 	if (count($user) > 0){
-		return $user;
+		return $user[0];
 	} else {
 		echo '<div class="notification-box">
 				<dt>Access denied</dt>
@@ -14,11 +14,15 @@ function compareLogin($database, $email, $password) {
 	}
 }
 
-function getUserInfo($email) {
-
-
-    return $email;
+/*
+function getUserInfo($row) {
+	$userInfo = array();
+	foreach($row[0] as $column) {
+		$userInfo[] = $column;
+	}
+    return $userInfo;
 }
+*/
 
 function translateDate($date, $day, $month) {
     $newDay = "";

@@ -63,8 +63,8 @@ video {
 nav {
 	position: fixed;
 	top: 0;
-	left: -250px;
-	width: 300px;
+	left: -300px;
+	width: 350px;
 	height: 100vh;
 	display: block;
 	background-image: url('../images/sidebar.png');
@@ -138,8 +138,10 @@ nav ul li ul li {
 nav ul li ul li a { font-size: 0.75rem; }
 nav ul li ul li a:hover { font-size: 1.0rem; }
 
+
+nav ul li p,
 nav ul li a.user-a {
-	font-size: 0.8rem;
+	font-size: 0.75em;
 }
 
 /* Container */

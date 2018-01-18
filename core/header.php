@@ -6,13 +6,10 @@ require_once("functions.php");
 require_once("configs.php");
 
 if(isset($_POST["submit"])) {
-	//$_SESSION['user'] = $_POST["email"];
-	$result = compareLogin($dbh, $_POST['email'], $_POST['psw']);
-	$user = getUserInfo($result);
-	$_SESSION['user'] = $user[0]['firstname'];
+	$user = compareLogin($dbh, $_POST['email'], $_POST['psw']);
+	$_SESSION['user'] = $user;
 }
 
-if(isset($_SESSION['user'])) $user = $_SESSION['user'];
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 ?>
@@ -26,24 +23,24 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 	<meta name="keywords" content="Sci-Fi, Fletnix, films, offline, space">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="images/favicon.png">
-	<title>Fletnix - Kijk sci-fi's!</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>Fletnix - Kijk sci-fi's!</title>
 </head>
 <body>
 <div class="bg-gradient"></div>
 	<nav>
 		<ul>
 			<?php
-			if(isset($user)) {
+			if(isset($_SESSION['user'])) {
 				echo '<li>
-						Welkom terug, '.$user.'!
+						Groetens, '.$_SESSION['user']['firstname'].'!<br/>
+						<p>'.translateDate(date('D'), date('d'), date('m')).'</p>
 						<a class="user-a" href="user">Bekijk profiel</a>
 						<a class="user-a" href="logout">Uitloggen</a>
 					</li>
 					<li>
 						<a href="films">Film</a>'.getGenres($dbh).'
-					</li>
-					';
+					</li>';
 			} else {
 				echo '<button onclick="document.getElementById(\'id01\').style.display=\'block\'">Login</button>';
 				echo '<li><a href="abonnement">Abonnement</a></li>';
@@ -53,44 +50,40 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 		</ul>
 	</nav>
 
-<div id="id01" class="modal">
+	<div id="id01" class="modal">
+	  <form class="modal-content animate" action="index.php" method="POST">
+	    <div class="imgcontainer">
+	      <span onclick="document.getElementById('id01').style.display='none'" class="close">&times;</span>
+	      <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
+	    </div>
 
-  <form class="modal-content animate" action="#" method="POST">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
+	    <div class="container">
+	      <label><b>Email</b></label>
+	      <input type="text" placeholder="email adres" name="email" required autofocus>
 
-    <div class="container">
-      <label><b>Email</b></label>
-      <input type="text" placeholder="email adres" name="email" required autofocus>
-
-      <label><b>Wachtwoord</b></label>
-      <input type="password" placeholder="wachtwoord" name="psw" required>
-      <input type="submit" name="submit" value="Inloggen">
-    </div>
-  </form>
-</div>
-
+	      <label><b>Wachtwoord</b></label>
+	      <input type="password" placeholder="wachtwoord" name="psw" required>
+	      <input type="submit" name="submit" value="Inloggen">
+	    </div>
+	  </form>
+	</div>
 
 	<div class="container">
 		<header>
-			<a class="logo" href="/Fletnix"><img src="images/logo.png" alt="logo"></a>
+			<a class="logo" href="../Fletnix/"><img src="images/logo.png" alt="logo"></a>
 			<?php
-				if (isset($user)&&(getPage('films') || getPage('view_movie'))){ viewFilmHeader($dbh, $genre); }
+				if(isset($user )&& (getPage('films') || getPage('view_movie'))){ viewFilmHeader($dbh, $genre); }
 				echo "<h1>$greeting</h1>";
 			?>
-
-
-<script>
-// Get the modal
-var modal = document.getElementById('id01');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
 		</header>
+
+	<script>
+		// Login
+		var modal = document.getElementById('id01');
+
+		window.onclick = function(event) {
+		    if (event.target === modal) {
+		        modal.style.display = "none";
+		    }
+		}
+	</script>

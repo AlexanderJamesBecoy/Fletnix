@@ -1,6 +1,9 @@
 <?php
 
 	include('core/header.php');
+	if(!isset($_SESSION['user'])) {
+		header("Location: /Fletnix");
+	}
 	$movie_id = strip_tags($_GET['id']);
 	$query = $dbh->prepare("SELECT * FROM Movie WHERE movie_id = ?");
 	$query->execute(array($movie_id));
