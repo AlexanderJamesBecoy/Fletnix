@@ -9,7 +9,7 @@ if(isset($_POST["submit"])) {
 	//$_SESSION['user'] = $_POST["email"];
 	$result = compareLogin($dbh, $_POST['email'], $_POST['psw']);
 	$user = getUserInfo($result);
-	$_SESSION['user'] = $user['firstname'];
+	$_SESSION['user'] = $user[0]['firstname'];
 }
 
 if(isset($_SESSION['user'])) $user = $_SESSION['user'];

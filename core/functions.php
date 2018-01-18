@@ -1,27 +1,22 @@
 <?php
 
 function compareLogin($database, $email, $password) {
-	$query = $database->prepare("SELECT * FROM Customer --WHERE customer_email = ? AND password = ?");
+	$query = $database->prepare("SELECT TOP 1 * FROM Customer WHERE customer_mail_address=? AND password=?");
 	$query->execute(array($email, $password));
 	$user = $query->fetchAll();
-	echo '<div class="notification-box">
-				<dt>'.$email.'</dt>
-				<dd>'.$password.'</dd>
-				<dd>'.$user.'</dd>
-			</div>';
-	if (count($user) == 1){
+	if (count($user) > 0){
 		return $user;
 	} else {
-		//echo '<div class="notification-box">
-			//	<dt>Access denied</dt>
-			//	<dd>Incorrect combination</dd>
-			//</div>';
+		echo '<div class="notification-box">
+				<dt>Access denied</dt>
+				<dd>Incorrect combination</dd>
+			</div>';
 	}
 }
 
 function getUserInfo($email) {
-	
-	
+
+
     return $email;
 }
 
