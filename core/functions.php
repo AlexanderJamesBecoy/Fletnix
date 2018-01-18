@@ -14,6 +14,44 @@ function compareLogin($database, $email, $password) {
 	}
 }
 
+
+	
+
+function createUser($database, $voornaam, $achternaam, $customer_Mail_Adress, $username, $birth_Date, $password, $country__Name, $contract_Type, $payment_Card_Number) {
+	//if (count($Customer_mail_adress) < 1){
+	$query = $database->prepare("INSERT INTO Customer (customer_mail_address, lastname, firstname, payment_method, payment_card_number, contract_type, subscription_start, subscription_end, user_name,	password, country_name,	gender,	birth_date)
+												VALUES('?','?','?','Visa', ?, '?', GETDATE(), NULL, '?','?', '?', 'M', ? )");
+	$query->execute(array($Customer_Mail_Adress, $achternaam, $voornaam, $payment_Card_Number,$contract_Type, $username, $password, $country__Name,$birth_Date));
+	echo '<pre>';
+print_r(PDO::getAvailableDrivers());
+echo '</pre>';
+
+	$query =("INSERT INTO Customer (customer_mail_address, lastname, firstname, payment_method, payment_card_number, contract_type, subscription_start, subscription_end, user_name,	password, country_name,	gender,	birth_date)
+												VALUES('bob27','bob','bob','Visa', 808, 'Pro', GETDATE(), NULL, 'bbob','bob', 'Netherlands', 'M', '2012-12-12' );");
+	//$query->execute(array($Customer_Mail_Adress, $achternaam, $voornaam, $payment_Card_Number,$contract_Type, $username, $password, $country__Name,$birth_Date));
+	
+	
+	//}else {
+	//	echo '<div class="notification-box">
+	//			<dt>Access denied</dt>
+	//			<dd>something went wrong</dd>
+	//		</div>';
+	//}
+	echo '<div class="notification-box">
+				<dt>Nieuw account is aangemakt!</dt>
+				<dd>Geniet nu van duizenden films!</dd>
+			</div>';
+}
+
+	
+	/*$cusomer_email_adress = $query->fetchAll();
+	{
+		return $user[0];
+	} 
+} 
+*/
+
+
 /*
 function getUserInfo($row) {
 	$userInfo = array();

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once("connection.php");
 require_once("functions.php");
@@ -11,7 +10,6 @@ if(isset($_POST["submit"])) {
 }
 
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
-
 ?>
 
 <!DOCTYPE html>

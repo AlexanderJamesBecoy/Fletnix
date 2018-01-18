@@ -1,4 +1,20 @@
-<?php include("core/header.php") ?>
+<?php
+if(!isset($_COOKIE["PHPSESSID"]))
+{
+  session_start();
+}
+include("core/header.php");
+require_once("core/connection.php");
+require_once("core/functions.php");
+require_once("core/configs.php");
+
+if(isset($_POST["submit2"])) {
+	$user = createUser($dbh, $_POST['register_voornaam'], $_POST['register_achternaam'], $_POST['register_email'], $_POST['register_gebruikersnaam'],
+	$_POST['register_gebruikersnaam'],$_POST['register_wachtwoord'],$_POST['register_wachtwoord_bevestigen'],$_POST['register_land'], 
+	$_POST['register_abonnement'], $_POST['register_rekening']);
+}
+?>
+
 
 		<div class="box" id="abonnementen">
 			<table id="table-subscription">
@@ -28,7 +44,7 @@
 				</tr>
 			</table>
 			<div class="box" id="registreer">
-				<form method="POST" action="index_ingelogd.html">
+				<form method="POST" action="http://localhost/Fletnix/">
 					<div class="form-register">
 						<svg height="60" width="100%">
 	    					<path d="M0,60 L50,0 L800,0 L750,60z" fill="#4286F4" />
@@ -70,18 +86,18 @@
 							<label for="register_land">Land</label>
 							<select id="register_land" name="register_land" required>
 								<option value="" selected disabled hidden>--Land--</option>
-								<option value="land_nederland">Nederland</option>
-								<option value="land_duitsland">Duitsland</option>
-								<option value="land_belgie">België</option>
+								<option value="netherlands">Nederland</option>
+								<option value="chile">chili</option>
+								<option value="luxembourg">luxemburg</option>
 							</select>
 						</div>
 						<div class="form-group center">
 							<label for="register_abonnement">Abonnement</label>
 							<select id="register_abonnement" name="register_abonnement" required>
 								<option value="" selected disabled hidden>--Kies een voyager--</option>
-								<option value="abonnement_millenium_falcon">Millenium Falcon</option>
-								<option value="abonnement_enterprise">Enterprise</option>
-								<option value="abonnement_mothership">Mothership</option>
+								<option value="basic">Millenium Falcon</option>
+								<option value="premium">Enterprise</option>
+								<option value="pro">Mothership</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -89,7 +105,7 @@
 							<input type="text" id="register_rekening" name="register_rekening" placeholder="Uw rekeningnummer" required>
 						</div>
 						<div class="form-group">
-							<input type="submit" name="registreren" value="Registreer">
+							<input type="submit" name="submit2" value="Registreer">
 						</div>
 					</div>
 				</form>
