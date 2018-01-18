@@ -58,10 +58,10 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
     <div class="container">
       <label><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Email-adres" name="email" required>
 
       <label><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Wachtwoord" name="psw" required>
 
       <button type="submit">Login</button>
     </div>

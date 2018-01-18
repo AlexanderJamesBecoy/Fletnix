@@ -205,7 +205,11 @@ header form input[type=submit]:hover {
 	-webkit-transition: all 0.2s ease-out;
 }
 
-header form select { font-size: 12px; }
+header form select {
+	margin-left: 2px;
+	font-size: 12px;
+	width: 205px;
+}
 
 /* Box */
 .box,
@@ -437,6 +441,16 @@ form .form-control input[type=submit]:hover {
 	background-color: #DDDDDD;
 }
 
+#movie-detail a {
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+#movie-detail a:hover {
+	letter-spacing: 2px;
+	transition: all 0.2s ease;
+}
+
 /* Login */
 #box-login {
 	background-color: #FFFFFF;
@@ -547,7 +561,7 @@ button:hover {
 }
 
 img.avatar {
-    width: 40%;
+    width: 50%;
     border-radius: 50%;
 }
 
@@ -562,25 +576,25 @@ span.psw {
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 9001; /* Sit on top （ゝ__•） */
+    display: none;
+    position: fixed;
+    z-index: 9001;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: hidden; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
     padding-top: 20px;
 }
 
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 5% auto 15% auto;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 25%;
 }
 
 /* The Close Button (x) */
