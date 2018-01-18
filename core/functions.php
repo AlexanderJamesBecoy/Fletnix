@@ -92,7 +92,8 @@ function viewFilmHeader($database, $genre=NULL, $director=NULL) {
                <input type="text" name="filter_search" size="30" placeholder="Zoek films op titel...">
                <input type="submit" value="Zoek">
                <select name="filter_genre">
-                   <option '.$defaultGenre.' disabled hidden>-- Kies een genre --</option>';
+                   <option '.$defaultGenre.' disabled hidden>-- Kies een genre --</option>
+                   <option value="all">Alles</option>';
                     $query = $database->query("SELECT * FROM Genre WHERE genre_name != 'Sci-Fi'");
                     while($genres = $query->fetch()) {
                         $selected = '';
@@ -101,7 +102,8 @@ function viewFilmHeader($database, $genre=NULL, $director=NULL) {
                     }
 
     echo        '</select><select name="filter_director">
-                    <option '.$defaultDirector.' disabled hidden>-- Kies een regisseur --</option>';
+                    <option '.$defaultDirector.' disabled hidden>-- Kies een regisseur --</option>
+                    <option value="all">Alles</option>';
                     $query = $database->query("SELECT * FROM Person P WHERE person_id IN (SELECT person_id FROM Movie_Director WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = 'Sci-Fi')) ORDER BY lastname ASC");
                     while($directors = $query->fetch()) {
                         $selected = '';
@@ -168,6 +170,8 @@ function getFilmPoster($cover) {
 function drawFilms($database, $page=1, $genre=NULL, $search=NULL, $director=NULL) {
     $h1 = "";
     $directorName = "";
+    $genre = ($genre == "all")? NULL : $genre;
+    $director = ($director == "all")? NULL : $director;
     if(!empty($director)) {
         $getName = $database->prepare("SELECT * FROM Person WHERE person_id = ?");
         $getName->execute(array($director));
