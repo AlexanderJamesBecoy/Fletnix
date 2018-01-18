@@ -72,7 +72,7 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 		<header>
 			<a class="logo" href="../Fletnix/"><img src="images/logo.png" alt="logo"></a>
 			<?php
-				if(isset($user )&& (getPage('films') || getPage('view_movie'))){ viewFilmHeader($dbh, $genre); }
+				if(getPage('films') || getPage('view_movie')) { viewFilmHeader($dbh, $genre); }
 				echo "<h1>$greeting</h1>";
 			?>
 		</header>
