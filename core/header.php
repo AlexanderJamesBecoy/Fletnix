@@ -7,7 +7,7 @@ require_once("configs.php");
 
 if(isset($_POST["submit"])) {
 	//$_SESSION['user'] = $_POST["email"];
-	$result = compareLogin($_POST['email'], $_POST['psw']);
+	$result = compareLogin($dbh, $_POST['email'], $_POST['psw']);
 	$user = getUserInfo($result);
 	$_SESSION['user'] = $user['firstname'];
 }
