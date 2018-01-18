@@ -7,7 +7,7 @@
 	$director = isset($_GET['filter_director'])? $_GET['filter_director'] : NULL;
 
 	if(!isset($_SESSION['user'])) {
-		header("Location: index.php");
+		header("Location: /");
 	}
 
 ?>
