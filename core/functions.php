@@ -1,11 +1,11 @@
 <?php
 
 function compareLogin($email, $password) {
-    
+    return $email;
 }
 
 function getUserInfo($email) {
-
+    return $email;
 }
 
 function translateDate($date, $day, $month) {
