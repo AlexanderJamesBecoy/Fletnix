@@ -26,7 +26,7 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 	<nav>
 		<ul>
 
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+<button onclick="document.getElementById('id01').style.display='block'">Login</button>
 			<?php
 			if($user != NULL) {
 				echo '<li>

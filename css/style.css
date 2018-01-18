@@ -525,24 +525,18 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-    background-color: #4CAF50;
+    background-color: #4286F4;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 65%;
 }
 
 button:hover {
     opacity: 0.8;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
+	transition: opacity 0.2s ease;
 }
 
 /* Center the image and position the close button */
@@ -612,4 +606,4 @@ span.psw {
        float: none;
     }
 
-} 
+}

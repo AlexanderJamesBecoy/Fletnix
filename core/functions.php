@@ -291,11 +291,11 @@ function getCastFromMovie($db, $movie_id, $th) {
     $count = 0;
     $tdCast = "";
     if($sth->rowCount() == 0) {
-        return '<tr><th>'.$th.'</th><td>Onbekend persoon</td></tr>';
+        return '<tr><th>'.$th.'</th><td>Onbekend</td></tr>';
     }
 	while($cast = $sth->fetch()) {
         $firstname = ($cast['firstname'] == NULL)? 'Onbekend' : $cast['firstname'];
-        $lastname = ($cast['lastname'] == NULL)? 'Persoon' : $cast['lastname'];
+        $lastname = ($cast['lastname'] == NULL)? '' : $cast['lastname'];
         if($count === 0) {
             $tdCast .= '<td>'.$firstname.' '.$lastname.'</td></tr>';
         } else {

@@ -1,41 +1,71 @@
-use FLETNIX_DOCENT
-INSERT INTO Movies (title, duration, description, publication_year, cover_image, price, URL) VALUES
-    -- 1
-    ('Alien: Covenant', 122, 'The crew of a colony ship, bound for a remote planet, discover an uncharted paradise with a threat beyond their imagination, and must attempt a harrowing escape.', 2017, '2017-Alien_Covenant.jpg', 5.0, 'https://www.youtube.com/watch?v=svnAD0TApb8'),
-    -- 2
-    ('Ghost In The Shell', 107, 'In the near future, Major is the first of her kind: A human saved from a terrible crash, who is cyber-enhanced to be a perfect soldier devoted to stopping the world\'s most dangerous criminals.', 2017, '2017-Ghost_In_The_Shell.jpg', 5.0, 'https://www.youtube.com/watch?v=G4VmJcZR0Yg'),
-    -- 3
-    ('Justice League', 120, 'Fueled by his restored faith in humanity and inspired by Superman\'s selfless act, Bruce Wayne enlists the help of his newfound ally, Diana Prince, to face an even greater enemy.', 2017, '2017-Justice_League.jpg', 5.0, 'https://www.youtube.com/watch?v=r9-DM9uBtVI'),
-    -- 4
-    ('Logan', 137, 'In the near future, a weary Logan cares for an ailing Professor X, somewhere on the Mexican border. However, Logan\'s attempts to hide from the world, and his legacy, are upended when a young mutant arrives, pursued by dark forces.', 2017, '2017-Logan.jpg', 5.0, 'https://www.youtube.com/watch?v=gbug3zTm3Ws'),
-    -- 5
-    ('Spiderman: Homecoming', 133, 'Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City.', 2017,'2017-Spiderman_Homecoming.jpg', 5.0, 'https://www.youtube.com/watch?v=U0D3AOldjMU'),
-    -- 6
-    ('Thor: Ragnarok', 130, 'Imprisoned, the mighty Thor finds himself in a lethal gladiatorial contest against the Hulk, his former ally. Thor must fight for survival and race against time to prevent the all-powerful Hela from destroying his home and the Asgardian civilization.', 2017, '2017-Thor_Ragnarok.jpg', 5.0, 'https://www.youtube.com/watch?v=ue80QwXMRHg'),
-    -- 7
-    ('Valerian and the City of Thousand Planets', 137, 'A dark force threatens Alpha, a vast metropolis and home to species from a thousand planets. Special operatives Valerian and Laureline must race to identify the marauding menace and safeguard not just Alpha, but the future of the universe.', 2017, '2017-Valerian_And_The_City_of_Thousand_Planets.jpg', 5.0, 'https://www.youtube.com/watch?v=K8oVfkZM3pA'),
-    -- 8
-    ('War For The Planets of the Apes', 140, 'After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind.', 2017, '2017-War_For_The_Planets_Of_The_Apes.jpg',5.0, 'https://www.youtube.com/watch?v=JDcAlo8i2y8'),
-    -- 9
-    ('Passengers', 114, 'A spacecraft traveling to a distant colony planet and transporting thousands of people has a malfunction in its sleep chambers. As a result, two passengers are awakened 90 years early.', 2016, '2016-Passengers.jpg', 4.0, 'https://www.youtube.com/watch?v=7BWWWQzTpNU'),
-    -- 10
-    ('Star Wars: The Force Awakens', 136, 'Three decades after the Empire\'s defeat, a new threat arises in the militant First Order. Stormtrooper defector Finn and the scavenger Rey are caught up in the Resistance\'s search for the missing Luke Skywalker.', 2015, '2015-Star_Wars_The_Force_Awakens.jpg', 4.0, 'https://www.youtube.com/watch?v=sGbxmsDFVnE'),
-    -- 11
-    ('Interstellar', 169, 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity\'s survival.', 2014, '2014-Interstellar.jpg', 4.0, 'https://www.youtube.com/watch?v=0vxOhd4qlnA')
+SELECT * FROM Movie WHERE movie_id = 500000
 
-UPDATE Movie SET
-    (,,,, '2007-Untitled_Star_Trek_Prequel.jpg',,),
-    -- 13
-    (,,,,,,),
-    -- 14
-    (,,,,,,),
-    -- 15
-    (,,,,,,),
-    -- 16
-    (,,,,,,),
-    -- 17
-    (,,,,,,),
-    -- 18
-    (,,,,,,),
-    --
-    ('Alien Apocalypse', 88, 'An astronaut doctor Ivan Hood and his fellow astronaut Kelly return from their mission in space to find the world has been taken over by aliens. Now Dr. Ivan Hood and Kelly must lead a revolution to free the human slaves from their alien masters.', 2005, '2005-Alien_Apocalypse.jpg', 1.00, 'https://www.youtube.com/watch?v=ZvIa4o38dJ0'),
+use FLETNIX_DOCENT
+-- Movies plaatsen
+INSERT INTO Movie (movie_id, title, duration, description, publication_year, cover_image, price, URL) VALUES
+    (500000, 'Alien: Covenant', 122, 'The crew of a colony ship, bound for a remote planet, discover an uncharted paradise with a threat beyond their imagination, and must attempt a harrowing escape.', 2017, '2017-Alien_Covenant.jpg', 5.0, 'https://www.youtube.com/watch?v=svnAD0TApb8'),
+    (500001, 'Ghost In The Shell', 107, 'In the near future, Major is the first of her kind: A human saved from a terrible crash, who is cyber-enhanced to be a perfect soldier devoted to stopping the world''s most dangerous criminals.', 2017, '2017-Ghost_In_The_Shell.jpg', 5.0, 'https://www.youtube.com/watch?v=G4VmJcZR0Yg'),
+    (500002, 'Justice League', 120, 'Fueled by his restored faith in humanity and inspired by Superman''s selfless act, Bruce Wayne enlists the help of his newfound ally, Diana Prince, to face an even greater enemy.', 2017, '2017-Justice_League.jpg', 5.0, 'https://www.youtube.com/watch?v=r9-DM9uBtVI'),
+    (500003, 'Logan', 137, 'In the near future, a weary Logan cares for an ailing Professor X, somewhere on the Mexican border. However, Logan''s attempts to hide from the world, and his legacy, are upended when a young mutant arrives, pursued by dark forces.', 2017, '2017-Logan.jpg', 5.0, 'https://www.youtube.com/watch?v=gbug3zTm3Ws'),
+    (500004, 'Spiderman: Homecoming', 133, 'Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City.', 2017,'2017-Spiderman_Homecoming.jpg', 5.0, 'https://www.youtube.com/watch?v=U0D3AOldjMU'),
+    (500005, 'Thor: Ragnarok', 130, 'Imprisoned, the mighty Thor finds himself in a lethal gladiatorial contest against the Hulk, his former ally. Thor must fight for survival and race against time to prevent the all-powerful Hela from destroying his home and the Asgardian civilization.', 2017, '2017-Thor_Ragnarok.jpg', 5.0, 'https://www.youtube.com/watch?v=ue80QwXMRHg'),
+    (500006, 'Valerian and the City of Thousand Planets', 137, 'A dark force threatens Alpha, a vast metropolis and home to species from a thousand planets. Special operatives Valerian and Laureline must race to identify the marauding menace and safeguard not just Alpha, but the future of the universe.', 2017, '2017-Valerian_And_The_City_of_Thousand_Planets.jpg', 5.0, 'https://www.youtube.com/watch?v=K8oVfkZM3pA'),
+    (500007, 'War For The Planets of the Apes', 140, 'After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind.', 2017, '2017-War_For_The_Planets_Of_The_Apes.jpg',5.0, 'https://www.youtube.com/watch?v=JDcAlo8i2y8'),
+    (500008, 'Passengers', 114, 'A spacecraft traveling to a distant colony planet and transporting thousands of people has a malfunction in its sleep chambers. As a result, two passengers are awakened 90 years early.', 2016, '2016-Passengers.jpg', 4.0, 'https://www.youtube.com/watch?v=7BWWWQzTpNU'),
+    (500009, 'Star Wars: The Force Awakens', 136, 'Three decades after the Empire''s defeat, a new threat arises in the militant First Order. Stormtrooper defector Finn and the scavenger Rey are caught up in the Resistance''s search for the missing Luke Skywalker.', 2015, '2015-Star_Wars_The_Force_Awakens.jpg', 4.0, 'https://www.youtube.com/watch?v=sGbxmsDFVnE'),
+	(500010, 'Interstellar', 169, 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity''s survival.', 2014, '2014-Interstellar.jpg', 4.0, 'https://www.youtube.com/watch?v=0vxOhd4qlnA'),
+	(500011, 'Star Trek: Discovery', 60, 'Ten years before Kirk, Spock and the Enterprise, the USS Discovery discovers new worlds and lifeforms as one Starfleet officer learns to understand all things alien.', 2017, '2017-Star_Trek_Discovery.jpg', 5.0, 'https://www.youtube.com/watch?v=oWnYtyNKPsA'),
+	(500012, 'Pacific Rim', 131, 'As a war between humankind and monstrous sea creatures wages on, a former pilot and a trainee are paired up to drive a seemingly obsolete special weapon in a desperate effort to save the world from the apocalypse.', 2013, '2013-Pacific_Rim.jpg', 2.50, 'https://www.youtube.com/watch?v=5guMumPFBag'),
+	(500013, 'Inception', 148, 'A thief, who steals corporate secrets through the use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.', 2010, '2010-Inception.jpg', 2.50, 'https://www.youtube.com/watch?v=d3A3-zSOBT4'),
+	(500014, 'Avatar', 162, 'A paraplegic marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.', 2009, '2009-Avatar.jpg', 2.50, 'https://www.youtube.com/watch?v=5PSNL1qE6VY'),
+	(500015, 'Gravity', 91, 'Two astronauts work together to survive after an accident which leaves them stranded in space.', 2013, '2013-Gravity.jpg', 2.50, 'https://www.youtube.com/watch?v=OiTiKOy59o4'),
+	(500016, 'Prestige, The', 130, 'After a tragic accident two stage magicians engage in a battle to create the ultimate illusion whilst sacrificing everything they have to outwit the other.', 2007, '2006-The_Prestige.jpg', 2.50, 'https://www.youtube.com/watch?v=ijXruSzfGEc'),
+	(500017, 'Mist, The', 126, 'A freak storm unleashes a species of bloodthirsty creatures on a small town, where a small band of citizens hole up in a supermarket and fight for their lives.', 2007, '2007-The_Mist.jpg', 2.50, 'https://www.youtube.com/watch?v=kya_uqiSQOY'),
+	(500018, 'Star Wars: Episode III - Revenge of the Sith', 140, 'Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat, Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy.', 2005, '2005-Star_Wars_Episode_3.jpg', 2.50, 'https://www.youtube.com/watch?v=5UnjrG_N8hU'),
+	(500019, 'Avengers, The', 143, 'Earth''s mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.', 2012, '2012-The_Avengers.jpg', 2.50, 'https://www.youtube.com/watch?v=eOrNdBpGMv8'),
+	(500020, 'Her', 126, 'In a near future, a lonely writer develops an unlikely relationship with an operating system designed to meet his every need.', 2013, '2013-Her.jpg', 2.50, 'https://www.youtube.com/watch?v=6QRvTv_tpw0'),
+	(500021, 'Ex Machina', 108, 'A young programmer is selected to participate in a ground-breaking experiment in synthetic intelligence by evaluating the human qualities of a breath-taking humanoid A.I.', 2014, '2014-Ex_Machina.jpg', 3.0, 'https://www.youtube.com/watch?v=EoQuVnKhxaM'),
+	(500022, 'Edge of Tommorow', 113, 'A soldier fighting aliens gets to relive the same day over and over again, the day restarting every time he dies.', 2014, '2014-Edge_of_Tommorow.jpg', 3.0, 'https://www.youtube.com/watch?v=vw61gCe2oqI'),
+	(500023, 'Limitless', 105, 'With the help of a mysterious pill that enables the user to access one hundred percent of his brain abilities, a struggling writer becomes a financial wizard, but it also puts him in a new world with lots of dangers.', 2011, '2011-Limitless.jpg', 2.50, 'https://www.youtube.com/watch?v=4TLppsfzQH8'),
+	(500024, 'Prometheus', 124, 'Following clues to the origin of mankind, a team finds a structure on a distant moon, but they soon realize they are not alone.', 2012, '2012-Prometheus.jpg', 2.50, 'https://www.youtube.com/watch?v=nmJOO6D5RvA'),
+	(500025, 'Arrival', 116, 'When twelve mysterious spacecrafts appear around the world, linguistics professor Louise Banks is tasked with interpreting the language of the apparent alien visitors.', 2016, '2016-Arrival.jpg', 4.0, 'https://www.youtube.com/watch?v=AMgyWT075KY'),
+	(500026, 'Martian, The', 144, 'An astronaut becomes stranded on Mars after his team assume him dead, and must rely on his ingenuity to find a way to signal to Earth that he is alive.', 2015, '2015-The_Martian.jpg', 3.0, 'https://www.youtube.com/watch?v=ej3ioOneTy8'),
+	(500027, 'Cloverfield', 85, 'A group of friends venture deep into the streets of New York on a rescue mission during a rampaging monster attack.', 2008, '2008-Cloverfield.jpg', 2.50, 'https://www.youtube.com/watch?v=sQFpMZ6glTo'),
+	(500028, 'Guardians of the Galaxy', 121, 'A group of intergalactic criminals are forced to work together to stop a fanatical warrior from taking control of the universe.', 2014, '2014-Guardians_of_the_Galaxy.jpg', 3.0, 'https://i.ytimg.com/an_webp/d96cjJhvlMA/mqdefault_6s.webp?du=3000&sqp=CIClgtMF&rs=AOn4CLDw2WtqhB6E6eyQ5Q79PrHG4HfEyg'),
+	(500029, 'Avengers: Age of Ultron', 141, 'When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and it''s up to Earth''s mightiest heroes to stop the villainous Ultron from enacting his terrible plan.', 2015, '2015-Avengers_Age_of_Ultron.jpg', 3.0, 'https://www.youtube.com/watch?v=tmeOjFno6Do')
+
+-- Genres in de movies zetten
+INSERT INTO Movie_Genre (movie_id, genre_name) VALUES
+	(500000, 'Sci-Fi'), (500000, 'Horror'), (500000, 'Thriller'),
+	(500001, 'Sci-Fi'), (500001, 'Action'), (500001, 'Crime'), (500001, 'Drama'),
+	(500002, 'Sci-Fi'), (500002, 'Action'), (500002, 'Adventure'), (500002, 'Fantasy'),
+	(500003, 'Sci-Fi'), (500003, 'Action'), (500003, 'Drama'),
+	(500004, 'Sci-Fi'), (500004, 'Action'), (500004, 'Adventure'),
+	(500005, 'Sci-Fi'), (500005, 'Action'), (500005, 'Adventure'), (500005, 'Comedy'),
+	(500006, 'Sci-Fi'), (500006, 'Action'), (500006, 'Adventure'), (500006, 'Fantasy'),
+	(500007, 'Sci-Fi'), (500007, 'Action'), (500007, 'Adventure'), (500007, 'Drama'),
+	(500008, 'Sci-Fi'), (500008, 'Drama'), (500008, 'Thriller'),
+	(500009, 'Sci-Fi'), (500009, 'Action'), (500009, 'Adventure'), (500009, 'Fantasy'),
+	(500010, 'Sci-Fi'), (500010, 'Adventure'), (500010, 'Drama'),
+	(500011, 'Sci-Fi'),
+	(500012, 'Sci-Fi'), (500012, 'Action'), (500012, 'Adventure'),
+	(500013, 'Sci-Fi'), (500013, 'Action'), (500013, 'Adventure'),
+	(500014, 'Sci-Fi'), (500014, 'Action'), (500014, 'Adventure'), (500014, 'Fantasy'),
+	(500015, 'Sci-Fi'), (500015, 'Drama'), (500015, 'Thriller'),
+	(500016, 'Sci-Fi'), (500016, 'Drama'), (500016, 'Mystery'),
+	(500017, 'Sci-Fi'), (500017, 'Horror'), (500017, 'Thriller'),
+	(500018, 'Sci-Fi'), (500018, 'Action'), (500018, 'Adventure'), (500018, 'Fantasy'),
+	(500019, 'Sci-Fi'), (500019, 'Action'), (500019, 'Adventure'),
+	(500020, 'Sci-Fi'), (500020, 'Drama'), (500020, 'Romance'),
+	(500021, 'Sci-Fi'), (500021, 'Drama'), (500021, 'Mystery'),
+	(500022, 'Sci-Fi'), (500022, 'Action'), (500022, 'Adventure'),
+	(500023, 'Sci-Fi'), (500023, 'Mystery'), (500023, 'Thriller'),
+	(500024, 'Sci-Fi'), (500024, 'Adventure'), (500024, 'Mystery'),
+	(500025, 'Sci-Fi'), (500025, 'Drama'), (500025, 'Mystery'),
+	(500026, 'Sci-Fi'), (500026, 'Adventure'), (500026, 'Drama'),
+	(500027, 'Sci-Fi'), (500027, 'Action'), (500027, 'Horror'),
+	(500028, 'Sci-Fi'), (500028, 'Action'), (500028, 'Adventure'),
+	(500029, 'Sci-Fi'), (500029, 'Action'), (500029, 'Adventure')
+
+-- Dragonball Z cover_image zetten
+UPDATE Movie SET cover_image = '2007-Dragonball_Z.jpg' WHERE movie_id = 92850
