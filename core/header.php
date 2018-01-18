@@ -8,6 +8,7 @@ require_once("configs.php");
 if(isset($_POST["submit"])) {
 	$user = compareLogin($dbh, $_POST['email'], $_POST['psw']);
 	$_SESSION['user'] = $user;
+	$_SESSION['logged_in'] = date('H:i');
 }
 
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
@@ -35,7 +36,9 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 				echo '<li>
 						Groetens, '.$_SESSION['user']['firstname'].'!<br/>
 						<p>'.translateDate(date('D'), date('d'), date('m')).'</p>
+						<p>Laatst ingelogd: '.$_SESSION['logged_in'].'</p>
 						<a class="user-a" href="user">Bekijk profiel</a>
+						&nbsp;|&nbsp;
 						<a class="user-a" href="logout">Uitloggen</a>
 					</li>
 					<li>
