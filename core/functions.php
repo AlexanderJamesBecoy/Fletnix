@@ -311,4 +311,9 @@ function getCastFromMovie($db, $movie_id, $th) {
     return $thCast.$tdCast;
 }
 
+function calculateDiscount($price, $discount) {
+    $percentage = 1 - ($discount * 0.01);
+    return $price * $percentage;
+}
+
 ?>
