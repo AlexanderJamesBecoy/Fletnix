@@ -6,8 +6,8 @@
 	$search = isset($_GET['filter_search'])? $_GET['filter_search'] : NULL;
 	$director = isset($_GET['filter_director'])? $_GET['filter_director'] : NULL;
 
-	if(!isset($_SESSION['user'])) {
-		header("Location: /Fletnix/");
+	if(!isset($user)) {
+		header("Location: /Fletnix");
 	}
 
 ?>

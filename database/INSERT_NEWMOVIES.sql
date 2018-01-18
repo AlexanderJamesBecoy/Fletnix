@@ -1,4 +1,3 @@
-SELECT * FROM Movie WHERE movie_id = 500000
 
 use FLETNIX_DOCENT
 -- Movies plaatsen

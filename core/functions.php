@@ -1,5 +1,13 @@
 <?php
 
+function compareLogin($email, $password) {
+    
+}
+
+function getUserInfo($email) {
+
+}
+
 function translateDate($date, $day, $month) {
     $newDay = "";
     switch($date){

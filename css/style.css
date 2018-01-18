@@ -538,7 +538,8 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
-button {
+button,
+.modal-content input[type=submit] {
     background-color: #4286F4;
     color: white;
     padding: 14px 20px;
@@ -548,7 +549,8 @@ button {
     width: 65%;
 }
 
-button:hover {
+button:hover,
+.modal-content input[type=submit]:hover {
     opacity: 0.8;
 	transition: opacity 0.2s ease;
 }

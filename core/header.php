@@ -1,17 +1,18 @@
 <?php
 
-require_once("connection.php");
-
 session_start();
+require_once("connection.php");
 require_once("functions.php");
 require_once("configs.php");
 
-if(isset($_POST["email"])) {
-	$_session['user'] = $_POST["email"];
-	$user = $_session['user'];
+if(isset($_POST["submit"])) {
+	//$_SESSION['user'] = $_POST["email"];
+	$result = compareLogin($_SESSION['email'], $_SESSION['psw']);
+	$user = getUserInfo($result);
+	$_SESSION['user'] = $user['firstname'];
 }
-elseif(isset($_session['user'])) $user = $_session['user'];
 
+if(isset($_SESSION['user'])) $user = $_SESSION['user'];
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 ?>
@@ -25,17 +26,15 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 	<meta name="keywords" content="Sci-Fi, Fletnix, films, offline, space">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="images/favicon.png">
-	<title>Fletnix - Kijk sci-fi's offline</title>
+	<title>Fletnix - Kijk sci-fi's!</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <div class="bg-gradient"></div>
 	<nav>
 		<ul>
-
-			
 			<?php
-			if(isset ($user)) {
+			if(isset($user)) {
 				echo '<li>
 						Welkom terug, '.$user.'!
 						<a class="user-a" href="user">Bekijk profiel</a>
@@ -46,12 +45,9 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 					</li>
 					';
 			} else {
-				echo '<button onclick="document.getElementById(\'id01\').style.display=\'block\'" >Login</button>';
+				echo '<button onclick="document.getElementById(\'id01\').style.display=\'block\'">Login</button>';
 				echo '<li><a href="abonnement">Abonnement</a></li>';
 			}
-			
-				
-
 			?>
 			<li><a href="over_ons">Over Ons</a></li>
 		</ul>
@@ -59,24 +55,20 @@ $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 <div id="id01" class="modal">
 
-  <form class="modal-content animate" action="/Fletnix" method="POST">
+  <form class="modal-content animate" action="#" method="POST">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-      <label><b>email</b></label>
+      <label><b>Email</b></label>
       <input type="text" placeholder="email adres" name="email" required autofocus>
 
-      <label><b>Password</b></label>
+      <label><b>Wachtwoord</b></label>
       <input type="password" placeholder="wachtwoord" name="psw" required>
-      <input type="submit" value="Inloggen">
+      <input type="submit" name="submit" value="Inloggen">
     </div>
-	<? php
-	//header("Refresh:0");
-	?>
-
   </form>
 </div>
 
