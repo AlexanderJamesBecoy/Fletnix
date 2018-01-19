@@ -11,6 +11,22 @@ if(isset($_POST["submit"])) {
 	$_SESSION['logged_in'] = date('H:i');
 }
 
+if(isset($_POST["delete"])) {
+	deleteCustomer($dbh, $_SESSION['user']['customer_mail_address'], $_SESSION['user']['firstname']);
+	$_SESSION['user'] = NULL;
+}
+
+if(isset($_POST["register"])) {
+	if($_POST['register_confirm_password'] !== $_POST['register_password']) {
+		echo '<div class="notification-box">
+					<dt>Access denied</dt>
+					<dd>Wachtwoord komen niet overeen.</dd>
+				</div>';
+		exit;
+	}
+	createUser($dbh, $_POST['register_firstname'], $_POST['register_lastname'], $_POST['register_email'], $_POST['register_username'], $_POST['register_password'],$_POST['register_confirm_password'],$_POST['register_country'], $_POST['register_contract'], $_POST['register_payment_method'], $_POST['register_payment_number'], $_POST['register_gender']);
+}
+
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
 
 ?>

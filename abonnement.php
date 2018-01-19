@@ -28,7 +28,7 @@
 				</tr>
 			</table>
 			<div class="box" id="registreer">
-				<form method="POST" action="http://localhost/Fletnix/">
+				<form method="POST" action="index.php">
 					<div class="form-register">
 						<svg height="60" width="100%">
 	    					<path d="M0,60 L50,0 L800,0 L750,60z" fill="#4286F4" />
@@ -39,57 +39,70 @@
 					</div>
 					<div class="form-control">
 						<div class="form-group">
-							<label for="register_voornaam">Voornaam</label>
-							<input type="text" id="register_voornaam" name="register_voornaam" placeholder="Uw voornaam" required>
+							<label for="register_firstname">Voornaam</label>
+							<input type="text" id="register_firstname" name="register_firstname" placeholder="Uw voornaam" required>
 						</div>
 						<div class="form-group">
-							<label for="register_achternaam">Achternaam</label>
-							<input type="text" id="register_achternaam" name="register_achternaam" placeholder="Uw achternaam" required>
+							<label for="register_lastname">Achternaam</label>
+							<input type="text" id="register_lastname" name="register_lastname" placeholder="Uw achternaam" required>
 						</div>
 						<div class="form-group">
 							<label for="register_email">E-mail adres</label>
 							<input type="text" id="register_email" name="register_email" placeholder="Uw email-adres" required>
 						</div>
 						<div class="form-group">
-							<label for="register_gebruikersnaam">Gebruikersnaam</label>
-							<input type="text" id="register_gebruikersnaam" name="register_gebruikersnaam" placeholder="Uw gebruikersnaam" required>
-						</div>
-						<div class="form-group">
-							<label for="register_geboorte">Geboortedatum</label>
-							<input type="date" id="register_geboorte" name="register_geboorte" required>
-						</div>
-						<div class="form-group">
-							<label for="register_wachtwoord">Wachtwoord</label>
-							<input type="password" id="register_wachtwoord" name="register_wachtwoord" required>
-						</div>
-						<div class="form-group">
-							<label for="register_wachtwoord_bevestigen">Wachtwoord bevestigen</label>
-							<input type="password" id="register_wachtwoord_bevestigen" name="register_wachtwoord_bevestigen" required>
-						</div>
-						<div class="form-group">
-							<label for="register_land">Land</label>
-							<select id="register_land" name="register_land" required>
-								<option value="" selected disabled hidden>--Land--</option>
-								<option value="land_nederland">Nederland</option>
-								<option value="land_duitsland">Duitsland</option>
-								<option value="land_belgie">België</option>
+							<label for="register_gender">Geslacht</label>
+							<select id="register_gender" name="register_gender" required>
+								<option selected disabled hidden>--Je geslacht--</option>
+								<option value="M">Man</option>
+								<option value="F">Vrouw</option>
 							</select>
 						</div>
-						<div class="form-group center">
-							<label for="register_abonnement">Abonnement</label>
-							<select id="register_abonnement" name="register_abonnement" required>
+						<div class="form-group">
+							<label for="register_username">Gebruikersnaam</label>
+							<input type="text" id="register_username" name="register_username" placeholder="Uw gebruikersnaam" required>
+						</div>
+						<div class="form-group">
+							<label for="register_birthdate">Geboortedatum</label>
+							<input type="date" id="register_birthdate" name="register_birthdate" required>
+						</div>
+						<div class="form-group">
+							<label for="register_password">Wachtwoord</label>
+							<input type="password" id="register_password" name="register_password" required>
+						</div>
+						<div class="form-group">
+							<label for="register_confirm_password">Wachtwoord bevestigen</label>
+							<input type="password" id="register_confirm_password" name="register_confirm_password" required>
+						</div>
+						<div class="form-group">
+							<label for="register_country">Land</label>
+							<select id="register_country" name="register_country" required>
+								<option selected disabled hidden>--Land--</option>
+								<?php getCountry($dbh); ?>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="register_contract">Abonnement</label>
+							<select id="register_contract" name="register_contract" required>
 								<option value="" selected disabled hidden>--Kies een voyager--</option>
-								<option value="abonnement_millenium_falcon">Millenium Falcon</option>
-								<option value="abonnement_enterprise">Enterprise</option>
-								<option value="abonnement_mothership">Mothership</option>
+								<option value="Basic">Millenium Falcon</option>
+								<option value="Premium">Enterprise</option>
+								<option value="Pro">Mothership</option>
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="register_rekening">Rekeningnummer</label>
-							<input type="text" id="register_rekening" name="register_rekening" placeholder="Uw rekeningnummer" required>
+							<label for="register_payment_method">Betalingswijze</label>
+							<select id="register_payment_method" name="register_payment_method" required>
+								<option value="" selected disabled hidden>--Betalingswijze--</option>
+								<?php getPaymentMethods($dbh); ?>
+							</select>
 						</div>
 						<div class="form-group">
-							<input type="submit" name="registreren" value="Registreer">
+							<label for="register_payment_number">Rekeningnummer</label>
+							<input type="text" id="register_payment_number" name="register_payment_number" placeholder="Uw rekeningnummer" maxlength="10" required>
+						</div>
+						<div class="form-group">
+							<input type="submit" name="register" value="Registreer">
 						</div>
 					</div>
 				</form>

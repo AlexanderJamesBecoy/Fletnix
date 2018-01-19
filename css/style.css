@@ -468,11 +468,9 @@ form .form-control input[type=submit]:hover {
 	justify-content: space-around;
 }
 
-.user-change .update,
-.user-change .delete { width: 50%; }
+.user-change div { width: 47.5%; }
 
-.user-change .update button,
-.user-change .delete input[type=submit] {
+.user-change div button {
 	padding: 0;
 	color: #FFFFFF;
 	width: 100%;
@@ -482,10 +480,9 @@ form .form-control input[type=submit]:hover {
 }
 
 .user-change .update button { background-color: #DCE52B; }
-.user-change .delete input[type=submit] { background-color: #FF0000; }
+.user-change .delete button { background-color: #FF0000; }
 
-.user-change .update button:hover,
-.user-change .delete input[type=submit]:hover {
+.user-change div button:hover {
 	opacity: 0.65;
 	transition: all 0.2s ease;
 }

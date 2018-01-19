@@ -10,24 +10,27 @@ function compareLogin($database, $email, $password) {
 	} else {
 		echo '<div class="notification-box">
 				<dt>Access denied</dt>
-				<dd>Onjuist combinatie</dd>
+				<dd>Onjuist combinatie of account bestaat niet.</dd>
 			</div>';
 	}
 }
-/*
-function updateContract($database, $email, $contract_Type_Old, $contract_Type_New){
-	$query = $database->prepare("UPDATE Customer SET contract_type = REPLACE(contract_type, ?, ?) WHERE customer_mail_address" LIKE ?);
-	$query->execute(array($contract_Type_Old, $contract_type_New, $email))
-	
+
+/* Get Country */
+function getCountry($database) {
+	$query = $database->query("SELECT DISTINCT country_name FROM Country");
+	while($country = $query->fetch()) {
+		echo '<option value="'.$country['country_name'].'">'.$country['country_name'].'</option>';
+	}
 }
 
-function getContract($database, $email){
-	$query = $database->prepare("SELECT FROM WERE customer_mail_address")
-	
+/* Get Payment Method */
+function getPaymentMethods($database) {
+	$query = $database->query("SELECT DISTINCT payment_method FROM Payment");
+	while($payment = $query->fetch()) {
+		echo '<option value="'.$payment['payment_method'].'">'.$payment['payment_method'].'</option>';
+	}
 }
 
-
-*/
 /* Translate numeric date to text */
 function translateDate($date, $day, $month) {
     $newDay = "";
@@ -293,7 +296,7 @@ function getDetailFromMovie($db, $movie, $userInfo) {
             $previous_part = $movie['previous_part'];
             echo 	'<tr>
                         <th>Prequel</th>';
-			            $sth = $dbh->prepare("SELECT * FROM Movie WHERE movie_id = ?");
+			            $sth = $db->prepare("SELECT * FROM Movie WHERE movie_id = ?");
 			            $sth->execute(array($previous_part));
 			            $previous_movie = $sth->fetch();
             			echo 		'<td><a href="view_movie?id='.$previous_movie['movie_id'].'">'.$previous_movie['title'].'</a></td>';
@@ -421,9 +424,35 @@ function mostViewedMovies($db, $userInfo) {
 
 /* Change contract */
 function updateCustomerContract($db, $email_address, $contract) {
+	switch($contract) {
+		case 'abonnement_mothership':
+			$contract = 'Pro';
+			break;
+		case 'abonnement_enterprise':
+			$contract = 'Premium';
+			break;
+		default:
+			$contract = 'Basic';
+	}
 	$query = $db->prepare("UPDATE Customer SET contract_type = ? WHERE customer_mail_address = ?");
 	$query->execute(array($contract, $email_address));
-	header("Location: user");
+	switch($contract) {
+		case 'Pro':
+			$contract = 'Mothership';
+			break;
+		case 'Premium':
+			$contract = 'Enterprise';
+			break;
+		default:
+			$contract = 'Millenium Falcon';
+	}
+	$query = $db->prepare("SELECT * FROM Customer WHERE customer_mail_address = ?");
+	$query->execute(array($email_address));
+	$_SESSION['user'] = $query->fetch();
+	echo '<div class="notification-box">
+			<dt>Updated account</dt>
+			<dd>U heeft nu de contract '.$contract.'</dd>
+		</div>';
 }
 
 /* Delete account */
@@ -436,6 +465,40 @@ function deleteCustomer($db, $email_address, $firstname) {
 			<dt>Gebruiker succesvol verwijderd</dt>
 			<dd>Goodbye '.$firstname.' :(</dd>
 		</div>';
+}
+
+/* Create Account */
+function createUser($database, $firstname, $lastname, $customerMailAddress, $username, $birthDate, $password, $countryName, $contractType, $paymentMethod, $paymentCardNumber, $gender) {
+
+	$query = $database->prepare("SELECT * FROM Customer WHERE customer_mail_address = ?");
+	$query->execute(array($customerMailAddress));
+	$row = $query->fetch();
+	if($row > 0) {
+		echo '<div class="notification-box">
+					<dt>Access denied!</dt>
+					<dd>Account met de bijbehorende e-mail bestaat al.</dd>
+				</div>';
+		return 0;
+	}
+	$today = date('Y-m-d');
+
+	$query = $database->prepare("INSERT INTO Customer (customer_mail_address, lastname, firstname, payment_method, payment_card_number, contract_type, subscription_start, user_name, password, country_name, gender, birth_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$query->execute(array($customerMailAddress, $lastname, $firstname, $paymentMethod, $paymentCardNumber, $contractType, $today, $username, $password, $countryName, $gender, $birthDate));
+
+	$query = $database->prepare("SELECT * FROM Customer WHERE customer_mail_address = ?");
+	$query->execute(array($customerMailAddress));
+	$row = $query->fetch();
+	if($row > 0) {
+		echo '<div class="notification-box">
+					<dt>Nieuw account is aangemakt!</dt>
+					<dd>Geniet nu van duizenden films!</dd>
+				</div>';
+	} else {
+		echo '<div class="notification-box">
+					<dt>Access denied</dt>
+					<dd>Er is iets fout gegaan.</dd>
+				</div>';
+	}
 }
 
 ?>

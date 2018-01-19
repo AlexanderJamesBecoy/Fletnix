@@ -5,10 +5,11 @@
 		header("Location: films");
 	}
 	$user = $_SESSION['user'];
-	
+
 	if(isset($_POST["change"])) {
-	$user = updateCustomerContract($dbh, $_SESSION['user'], $_POST['type_new']);
-}
+		updateCustomerContract($dbh, $_SESSION['user']['customer_mail_address'], $_POST['register_abonnement']);
+		$user = $_SESSION['user'];
+	}
 ?>
 <body>
 <div class="box">
@@ -52,13 +53,11 @@
 		</table>
 		<div class="user-change">
 			<div class="update" >
-				<?php
-					echo '<button onclick="document.getElementById(\'id02\').style.display=\'block\'">Verander abonnement</button>';
-				?>
-				</div>
-			<form class="delete" action="user?delete" method="POST">			
-				<input type="submit" name="delete" value="Delete Account">
-			</form>
+				<button onclick="document.getElementById('id02').style.display='block'">Verander abonnement</button>
+			</div>
+			<div class="delete" >
+				<button onclick="document.getElementById('id03').style.display='block'">Verwijder account</button>
+			</div>
 		</div>
 		<table class="user-movie-detail">
 			<h2>Meest bekeken films</h2>
@@ -71,26 +70,27 @@
 		</table>
 	</div>
 </div>
+
 <div id="id02" class="modal">
-	  <form class="modal-content animate" action="user.php" method="POST">
+	  <form class="modal-content animate" action="user" method="POST">
 	    <div class="imgcontainer">
 	      <span onclick="document.getElementById('id02').style.display='none'" class="close">&times;</span>
 	      <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
 	    </div>
 	    <div class="form-group center">
-							<label for="register_abonnement">Abonnement</label>
-							<select id="type_new" name="register_abonnement" required>
-								<option value="" selected disabled hidden>--Kies een voyager--</option>
-								<option value="abonnement_millenium_falcon">Millenium Falcon</option>
-								<option value="abonnement_enterprise">Enterprise</option>
-								<option value="abonnement_mothership">Mothership</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<input type="submit" name="change" value="Opslaan">
-						</div>
+			<label for="register_abonnement">Abonnement</label>
+			<select id="type_new" name="register_abonnement" required>
+				<option value="" selected disabled hidden>--Kies een voyager--</option>
+				<option value="abonnement_millenium_falcon">Millenium Falcon</option>
+				<option value="abonnement_enterprise">Enterprise</option>
+				<option value="abonnement_mothership">Mothership</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<input type="submit" name="change" value="Opslaan">
+		</div>
 	  </form>
-	  
+
 	  <script>
 		// change contract_type
 		var modal = document.getElementById('id02');
@@ -101,7 +101,33 @@
 		    }
 		}
 	</script>
-	</div>
+</div>
+
+<div id="id03" class="modal">
+	  <form class="modal-content animate" action="/Fletnix" method="POST">
+	    <div class="imgcontainer">
+	      <span onclick="document.getElementById('id03').style.display='none'" class="close">&times;</span>
+	      <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
+	    </div>
+	    <div class="form-group center">
+			<p>Weet u het zeker, dat u uw account wilt verwijderen?</p>
+		</div>
+		<div class="form-group">
+			<input type="submit" name="delete" value="Verwijder">
+		</div>
+	  </form>
+
+	  <script>
+		// change contract_type
+		var modal = document.getElementById('id03');
+
+		window.onclick = function(event) {
+		    if (event.target === modal) {
+		        modal.style.display = "none";
+		    }
+		}
+	</script>
+</div>
 
 <?php include("core/footer.php"); ?>
 </body>
