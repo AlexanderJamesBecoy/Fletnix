@@ -14,7 +14,20 @@ function compareLogin($database, $email, $password) {
 			</div>';
 	}
 }
+/*
+function updateContract($database, $email, $contract_Type_Old, $contract_Type_New){
+	$query = $database->prepare("UPDATE Customer SET contract_type = REPLACE(contract_type, ?, ?) WHERE customer_mail_address" LIKE ?);
+	$query->execute(array($contract_Type_Old, $contract_type_New, $email))
+	
+}
 
+function getContract($database, $email){
+	$query = $database->prepare("SELECT FROM WERE customer_mail_address")
+	
+}
+
+
+*/
 /* Translate numeric date to text */
 function translateDate($date, $day, $month) {
     $newDay = "";
@@ -408,7 +421,7 @@ function mostViewedMovies($db, $userInfo) {
 
 /* Change contract */
 function updateCustomerContract($db, $email_address, $contract) {
-	$query = $db->prepare("UPDATE Customer SET contract_type = ? WHERE customer_email_address = ?");
+	$query = $db->prepare("UPDATE Customer SET contract_type = ? WHERE customer_mail_address = ?");
 	$query->execute(array($contract, $email_address));
 	header("Location: user");
 }
@@ -417,7 +430,7 @@ function updateCustomerContract($db, $email_address, $contract) {
 function deleteCustomer($db, $email_address, $firstname) {
 	session_unset();
 	session_destroy();
-	$query = $db->prepare("DELETE FROM Customer WHERE customer_email_address = ?");
+	$query = $db->prepare("DELETE FROM Customer WHERE customer_mail_address = ?");
 	$query->execute(array($email_address));
 	echo '<div class="notification-box">
 			<dt>Gebruiker succesvol verwijderd</dt>

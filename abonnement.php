@@ -28,7 +28,7 @@
 				</tr>
 			</table>
 			<div class="box" id="registreer">
-				<form method="POST" action="index_ingelogd.html">
+				<form method="POST" action="http://localhost/Fletnix/">
 					<div class="form-register">
 						<svg height="60" width="100%">
 	    					<path d="M0,60 L50,0 L800,0 L750,60z" fill="#4286F4" />
