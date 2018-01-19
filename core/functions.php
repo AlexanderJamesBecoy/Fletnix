@@ -103,7 +103,7 @@ function translateDate($date, $day, $month) {
 }
 
 function getPage($page) {
-    return stripos($_SERVER['REQUEST_URI'], $page);
+    return stripos($_SERVER['REQUEST_URI'], strip_tags($page));
 }
 
 function getGenres($db) {
@@ -188,7 +188,7 @@ function pagination($destination, $page, $pageLimit, $genre=NULL, $search=NULL, 
 }
 
 function getFilmPoster($cover) {
-    if($cover == NULL) {
+    if(!isset($cover)) {
         return 'images/film_covers/default_poster.jpg';
     } else {
         return 'images/film_covers/'.$cover;
@@ -237,11 +237,10 @@ function drawFilms($database, $page=1, $genre=NULL, $search=NULL, $director=NULL
     $movies = $sth->fetchAll();
     if(count($movies) > 0) {
         $pageLimit = ceil(count($movies) / 15);
-
-        if($page > $pageLimit || $page < 1) {
-            header("Location: error");
-        }
-
+        if(($page > $pageLimit) || ($page < 1)) {
+			echo "<div class='box-error'><img src='images/not_found.jpg' alt='forbidden'><p>Forbidden &mdash; Area-505</p></div>";
+			exit();
+		}
         foreach($movies as $movie) {
             $poster = $movie['cover_image'];
             if(($rowCount >= ($page - 1) * 15) && ($rowCount < $rowLimit)) {
@@ -255,7 +254,6 @@ function drawFilms($database, $page=1, $genre=NULL, $search=NULL, $director=NULL
             }
             $rowCount++;
         }
-
         echo pagination('films', $page, $pageLimit, $genre, $search, $director);
     } else {
         echo '<div class="box-error"><img src="images/not_found.jpg" alt="not-found"><p>Mayday mayday, movies not found!</p></div>';
@@ -369,13 +367,13 @@ function getContract($contract_type) {
 	$contract = "";
 	switch($contract_type) {
 		case 'Pro':
-			$contract = '<span class="user-text" style="color: #FFF67F;">Mothership</span>';
+			$contract = '<span class="user-text contract-pro">Mothership</span>';
 			break;
 		case 'Premium':
-			$contract = '<span class="user-text" style="color: #89521E;">Enterprise</span>';
+			$contract = '<span class="user-text contract-pre">Enterprise</span>';
 			break;
 		default:
-			$contract = '<span class="user-text" style="color: #FFFFFF;">Millenium Falcon</span>';
+			$contract = '<span class="user-text contract-bas">Millenium Falcon</span>';
 	}
 	return $contract;
 }
@@ -466,16 +464,6 @@ function deleteCustomer($db, $email_address, $firstname) {
 /* Create Account */
 function createUser($database, $firstname, $lastname, $customerMailAddress, $username, $birthDate, $password, $countryName, $contractType, $paymentMethod, $paymentCardNumber, $gender) {
 
-	$query = $database->prepare("SELECT * FROM Customer WHERE customer_mail_address = ?");
-	$query->execute(array($customerMailAddress));
-	$row = $query->fetch();
-	if($row > 0) {
-		echo '<div class="notification-box">
-					<dt>Access denied!</dt>
-					<dd>Account met de bijbehorende e-mail bestaat al.</dd>
-				</div>';
-		return 0;
-	}
 	$today = date('Y-m-d');
 
 	$query = $database->prepare("INSERT INTO Customer VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?)");
@@ -485,10 +473,9 @@ function createUser($database, $firstname, $lastname, $customerMailAddress, $use
 	$query->execute(array($customerMailAddress));
 	$row = $query->fetchAll();
 	if($row > 0) {
-		echo '<div class="notification-box">
-					<dt>Nieuw account is aangemakt!</dt>
-					<dd>Geniet nu van duizenden films!</dd>
-				</div>';
+		$_SESSION['user'] = $row[0];
+		$_SESSION['logged_in'] = date('H:ia');
+		header('Location: films?registered');
 	} else {
 		echo '<div class="notification-box">
 					<dt>Access denied</dt>

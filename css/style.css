@@ -59,14 +59,17 @@ iframe {
 }
 
 .center { text-align: center; }
-.user-text { text-shadow: 0 0 1px #000000; }
-.fem { color: #FF7F7F; }
+.user-text { -webkit-text-stroke: 0.75px #000000; }
+.fem { color: #FF0000; }
 .men { color: #0000FF; }
 .error-box dd { color: #870E1C; }
 .blue {
 	color: #4286F4;
 	font-size: 1.05em;
 }
+.contract-bas { color: #FFFFFF; }
+.contract-pre { color: #89521E; }
+.contract-pro { color: #FFF67F;}
 
 /* Navigation Menu */
 nav {

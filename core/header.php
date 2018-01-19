@@ -5,40 +5,62 @@ require_once("connection.php");
 require_once("functions.php");
 require_once("configs.php");
 
+if((getPage('films') || getPage('view_movie') || getPage('user')) && (!isset($_SESSION['user']))) {
+	header('Location: /Fletnix');
+} elseif((getPage('/Fletnix') || getPage('abonnement')) && (isset($_SESSION['user']))) {
+	header('Location: films');
+} elseif((getPage('films?registered'))) {
+	echo '<div class="notification-box">
+				<dt>Nieuw account is aangemakt!</dt>
+				<dd>Geniet nu van duizenden films!</dd>
+			</div>';
+}
+
 if(isset($_POST["submit"])) {
-	$user = compareLogin($dbh, $_POST['email'], $_POST['psw']);
+	$user = compareLogin($dbh, strip_tags($_POST['email']), strip_tags($_POST['psw']));
 	$_SESSION['user'] = $user;
-	$_SESSION['logged_in'] = date('H:i');
+	$_SESSION['logged_in'] = date('H:ia');
 }
 
 if(isset($_POST["delete"])) {
-	deleteCustomer($dbh, $_SESSION['user']['customer_mail_address'], $_SESSION['user']['firstname']);
+	deleteCustomer($dbh, strip_tags($_SESSION['user']['customer_mail_address']), strip_tags($_SESSION['user']['firstname']));
 	$_SESSION['user'] = NULL;
 }
 
 if(isset($_POST["register"])) {
-	if($_POST['register_confirm_password'] !== $_POST['register_password']) {
+	$customerMailAddress = strip_tags($_POST['register_email']);
+	$query = $dbh->prepare("SELECT * FROM Customer WHERE customer_mail_address = ?");
+	$query->execute(array($customerMailAddress));
+	$row = $query->fetch();
+	if($row > 0) {
 		echo '<div class="notification-box">
-					<dt>Access denied</dt>
-					<dd>Wachtwoord komen niet overeen.</dd>
+					<dt>Access denied!</dt>
+					<dd>Account met de bijbehorende e-mail bestaat al.</dd>
 				</div>';
-		exit;
+	} else {
+		$password = strip_tags($_POST['register_password']);
+		$passwordConfirmed = strip_tags($_POST['register_confirm_password']);
+		if($passwordConfirmed !== $password) {
+			echo '<div class="notification-box">
+						<dt>Access denied</dt>
+						<dd>Wachtwoord komen niet overeen.</dd>
+					</div>';
+		} else {
+			$firstname = strip_tags($_POST['register_firstname']);
+			$lastname = strip_tags($_POST['register_lastname']);
+			$username = strip_tags($_POST['register_username']);
+			$birthDate = strip_tags($_POST['register_birthdate']);
+			$countryName = strip_tags($_POST['register_country']);
+			$contractType = strip_tags($_POST['register_contract']);
+			$paymentMethod = strip_tags($_POST['register_payment_method']);
+			$paymentCardNumber = strip_tags($_POST['register_payment_number']);
+			$gender = strip_tags($_POST['register_gender']);
+			createUser($dbh, $firstname, $lastname, $customerMailAddress, $username, $birthDate, $password, $countryName, $contractType, $paymentMethod, $paymentCardNumber, $gender);
+		}
 	}
-	$firstname = $_POST['register_firstname'];
-	$lastname = $_POST['register_lastname'];
-	$customerMailAddress = $_POST['register_email'];
-	$username = $_POST['register_username'];
-	$birthDate = $_POST['register_birthdate'];
-	$password = $_POST['register_password'];
-	$countryName = $_POST['register_country'];
-	$contractType = $_POST['register_contract'];
-	$paymentMethod = $_POST['register_payment_method'];
-	$paymentCardNumber = $_POST['register_payment_number'];
-	$gender = $_POST['register_gender'];
-	createUser($dbh, $firstname, $lastname, $customerMailAddress, $username, $birthDate, $password, $countryName, $contractType, $paymentMethod, $paymentCardNumber, $gender);
 }
 
-$genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
+$genre = isset($_GET['filter_genre'])? strip_tags($_GET['filter_genre']) : NULL;
 
 ?>
 

@@ -9,26 +9,26 @@
 					<th>Uw korting!</th>
 				</tr>
 				<tr>
-				    <td>Millenium Falcon</td>
+				    <td class="user-text contract-bas">Millenium Falcon</td>
 				    <td>€02.50</td>
 					<td>10</td>
 					<td>0.0%</td>
 				</tr>
 				<tr>
-				    <td>Enterprise</td>
+				    <td class="user-text contract-pre">Enterprise</td>
 				    <td>€07.50</td>
 					<td>20</td>
 					<td>20.0%</td>
 				</tr>
 			  	<tr>
-			  		<td>Mothership</td>
+			  		<td class="user-text contract-pro">Mothership</td>
 			    	<td>€10.00</td>
 					<td>&infin;</td>
 					<td>40.0%</td>
 				</tr>
 			</table>
 			<div class="box" id="registreer">
-				<form method="POST" action="index.php">
+				<form method="POST" action="#">
 					<div class="form-register">
 						<svg height="60" width="100%">
 	    					<path d="M0,60 L50,0 L800,0 L750,60z" fill="#4286F4" />
