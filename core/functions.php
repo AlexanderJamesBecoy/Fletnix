@@ -139,7 +139,7 @@ function viewFilmHeader($database, $genre=NULL, $director=NULL) {
                     $query = $database->query("SELECT * FROM Person P WHERE person_id IN (SELECT person_id FROM Movie_Director WHERE movie_id IN (SELECT movie_id FROM Movie_Genre WHERE genre_name = 'Sci-Fi')) ORDER BY lastname ASC");
                     while($directors = $query->fetch()) {
                         $selected = '';
-                        $name = $directors['firstname'].' '.$directors['lastname'];
+                        $name = $directors['lastname'].', '.$directors['firstname'];
                         if($directors['person_id'] == $person_id) $selected = 'selected';
                         echo '<option '.$selected.' title="'.$name.'" value="'.$directors['person_id'].'">'.$name.'</option>';
                     }
