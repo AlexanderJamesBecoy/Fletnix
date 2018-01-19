@@ -36,9 +36,10 @@ a { color: #4286F4; }
 
 p { line-height: 1.5em; }
 
-video {
+iframe {
+	clear: both;
 	width: 100%;
-	height: 100%;
+	height: 800px;
 }
 
 .notification-box {
@@ -668,6 +669,23 @@ span.psw {
 .close:focus {
     color: red;
     cursor: pointer;
+}
+
+.box-error {
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	border-bottom: 25px solid #4286F4;
+}
+
+.box-error img {
+	opacity: 0.5;
+}
+
+.box-error p {
+	color: #FFFFFF;
+	text-shadow: 0 0 2px #4286F4;
+	padding: 5px 0;
 }
 
 /* Change styles for span on extra small screens */

@@ -104,7 +104,7 @@
 </div>
 
 <div id="id03" class="modal">
-	  <form class="modal-content animate" action="/Fletnix" method="POST">
+	  <form class="modal-content animate" action="index.php" method="POST">
 	    <div class="imgcontainer">
 	      <span onclick="document.getElementById('id03').style.display='none'" class="close">&times;</span>
 	      <img src="images/img_avatar2.png" alt="Avatar" class="avatar">

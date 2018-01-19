@@ -24,6 +24,12 @@
 			<div class="box-1-2">
 				<?php getDetailFromMovie($dbh, $movie, $_SESSION['user']); ?>
 			</div>
+			<?php
+				if(isset($movie['URL'])) {
+					$url = substr($movie['URL'], -11);
+					echo '<iframe id="trailer" height="400px" src="https://www.youtube.com/embed/'.$url.'"></iframe>';
+				}
+			?>
 		</div>
 
 <?php include('core/footer.php'); ?>

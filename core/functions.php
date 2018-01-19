@@ -143,10 +143,6 @@ function viewFilmHeader($database, $genre=NULL, $director=NULL) {
                         if($directors['person_id'] == $person_id) $selected = 'selected';
                         echo '<option '.$selected.' title="'.$name.'" value="'.$directors['person_id'].'">'.$name.'</option>';
                     }
-                /*<select name="filter_order">
-                    <option value="title">Ordent op titel</option>
-                    <option value="year">Ordent op jaar</option>
-                </select>*/
     echo        '</select>
             </form>';
 }
@@ -276,8 +272,8 @@ function getDetailFromMovie($db, $movie, $userInfo) {
 				</tr>';
     if($movie['URL'] != NULL) {
         echo 	'<tr>
-                    <th>Prequel</th>
-                    <td><a href="'.$movie['URL'].'" target="_blank">Bekijk op youtube!</a></td>
+                    <th>Trailer</th>
+                    <td><a href="#trailer">Bekijk trailer!</a></td>
                 </tr>';
     }
     echo getCastFromMovie($db, $movie_id, 'Regisseur');
@@ -482,12 +478,12 @@ function createUser($database, $firstname, $lastname, $customerMailAddress, $use
 	}
 	$today = date('Y-m-d');
 
-	$query = $database->prepare("INSERT INTO Customer (customer_mail_address, lastname, firstname, payment_method, payment_card_number, contract_type, subscription_start, user_name, password, country_name, gender, birth_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$query = $database->prepare("INSERT INTO Customer VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?)");
 	$query->execute(array($customerMailAddress, $lastname, $firstname, $paymentMethod, $paymentCardNumber, $contractType, $today, $username, $password, $countryName, $gender, $birthDate));
 
 	$query = $database->prepare("SELECT * FROM Customer WHERE customer_mail_address = ?");
 	$query->execute(array($customerMailAddress));
-	$row = $query->fetch();
+	$row = $query->fetchAll();
 	if($row > 0) {
 		echo '<div class="notification-box">
 					<dt>Nieuw account is aangemakt!</dt>

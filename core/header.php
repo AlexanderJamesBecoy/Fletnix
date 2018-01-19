@@ -24,7 +24,18 @@ if(isset($_POST["register"])) {
 				</div>';
 		exit;
 	}
-	createUser($dbh, $_POST['register_firstname'], $_POST['register_lastname'], $_POST['register_email'], $_POST['register_username'], $_POST['register_password'],$_POST['register_confirm_password'],$_POST['register_country'], $_POST['register_contract'], $_POST['register_payment_method'], $_POST['register_payment_number'], $_POST['register_gender']);
+	$firstname = $_POST['register_firstname'];
+	$lastname = $_POST['register_lastname'];
+	$customerMailAddress = $_POST['register_email'];
+	$username = $_POST['register_username'];
+	$birthDate = $_POST['register_birthdate'];
+	$password = $_POST['register_password'];
+	$countryName = $_POST['register_country'];
+	$contractType = $_POST['register_contract'];
+	$paymentMethod = $_POST['register_payment_method'];
+	$paymentCardNumber = $_POST['register_payment_number'];
+	$gender = $_POST['register_gender'];
+	createUser($dbh, $firstname, $lastname, $customerMailAddress, $username, $birthDate, $password, $countryName, $contractType, $paymentMethod, $paymentCardNumber, $gender);
 }
 
 $genre = isset($_GET['filter_genre'])? $_GET['filter_genre'] : NULL;
