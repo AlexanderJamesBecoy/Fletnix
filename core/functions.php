@@ -281,7 +281,7 @@ function getDetailFromMovie($db, $movie, $userInfo) {
                 </tr>
                 <tr>
                     <th>Speelduur</th>
-                    <td>'.$movie['duration'].' min</td>
+                    <td>'.calculateMinToHours($movie['duration']).'</td>
                 </tr>'.getGenresFromMovie($db, $movie_id).'<tr>
                     <th>Omschrijving</th>
                     <td><p>'.$movie['description'].'</p></td>
@@ -336,6 +336,17 @@ function getCastFromMovie($db, $movie_id, $th) {
     }
     $thCast = '<tr><th rowspan='.$count.'>'.$th.'</th>';
     return $thCast.$tdCast;
+}
+
+/* Minutes to hours */
+function calculateMinToHours($min) {
+	if($min >= 60) {
+		$hours = floor($min / 60);
+		$rest = $min % 60;
+		return $hours.'hrs '.$rest.'min';
+	} else {
+		return $min.'min';
+	}
 }
 
 /* Calculate discount */
