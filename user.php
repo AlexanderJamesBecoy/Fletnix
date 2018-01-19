@@ -38,6 +38,15 @@
 			<tr>
 				<th>Type contract</th>
 				<td><?php echo getContract($user['contract_type']); ?></td>
+			</tr>
+			<tr>
+				<th>Betalingswijze</th>
+				<td><?php echo $user['payment_method']; ?></td>
+			</tr>
+			<tr>
+				<th>Rekeningnummer</th>
+				<td><?php echo $user['payment_card_number']; ?></td>
+			</tr>
 			<tr>
 				<th>Geabonneerd sinds</th>
 				<td><?php echo date("d/m/Y", strtotime($user['subscription_start'])); ?></td>
