@@ -102,10 +102,12 @@ function translateDate($date, $day, $month) {
     return $newDate .' '. $day .' '. $newMonth;
 }
 
+/* get page information*/
 function getPage($page) {
     return stripos($_SERVER['REQUEST_URI'], strip_tags($page));
 }
 
+/* get distinct genres */
 function getGenres($db) {
     $list = '<ul>';
     $sth = $db->query("SELECT DISTINCT genre_name FROM Genre");
@@ -117,6 +119,7 @@ function getGenres($db) {
     return $list;
 }
 
+/* draw film header */
 function viewFilmHeader($database, $genre=NULL, $director=NULL) {
     $defaultGenre = ($genre == NULL)? 'selected' : '';
     $defaultDirector = ($director == NULL)? 'selected' : '';
@@ -147,6 +150,7 @@ function viewFilmHeader($database, $genre=NULL, $director=NULL) {
             </form>';
 }
 
+/* draw pagination */
 function pagination($destination, $page, $pageLimit, $genre=NULL, $search=NULL, $director=NULL) {
     $pagination = '<div class="pagination">';
     $genre = '&filter_genre='.$genre;
@@ -187,6 +191,7 @@ function pagination($destination, $page, $pageLimit, $genre=NULL, $search=NULL, 
     return $pagination;
 }
 
+/* get film cover */
 function getFilmPoster($cover) {
     if(!isset($cover)) {
         return 'images/film_covers/default_poster.jpg';
@@ -195,6 +200,7 @@ function getFilmPoster($cover) {
     }
 }
 
+/* draw each films */
 function drawFilms($database, $page=1, $genre=NULL, $search=NULL, $director=NULL) {
     $h1 = "";
     $directorName = "";
